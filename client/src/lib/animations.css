@@ -1,0 +1,219 @@
+/* Animaciones para el sitio de RED MAFIA */
+
+/* Parpadeo de neón */
+@keyframes neon-glow {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 4px rgba(255, 0, 0, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 12px rgba(255, 0, 0, 0.6));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 4px rgba(255, 0, 0, 0.5));
+  }
+}
+
+/* Ondas de sonido para el ecualizador */
+@keyframes soundwave {
+  0% {
+    height: 10%;
+  }
+  50% {
+    height: 90%;
+  }
+  100% {
+    height: 10%;
+  }
+}
+
+/* Pulso de fuego */
+@keyframes fire-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+}
+
+/* Desvanecimiento de página */
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Desvanecimiento de elementos */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Desplazamiento lateral */
+@keyframes slide-in-right {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Efecto para títulos */
+@keyframes text-shadow-pulse {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+  }
+}
+
+/* Animación para líneas de luz */
+@keyframes light-line {
+  0% {
+    width: 0;
+    opacity: 0.7;
+  }
+  50% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 0;
+    opacity: 0.7;
+  }
+}
+
+/* Goteo de sangre/tinta */
+@keyframes blood-drip {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  30% {
+    height: var(--drip-height, 50px);
+    opacity: 0.8;
+  }
+  80% {
+    height: var(--drip-height, 50px);
+    opacity: 0.8;
+  }
+  100% {
+    height: var(--drip-height, 50px);
+    opacity: 0;
+  }
+}
+
+/* Fuego flotante */
+@keyframes float-fire {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* Transición de hover para elementos */
+@keyframes hover-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Clases de utilidad para aplicar animaciones */
+.animate-neon {
+  animation: neon-glow 2s infinite;
+}
+
+.animate-soundwave {
+  animation: soundwave 0.8s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.animate-page-transition {
+  animation: page-fade-in 0.5s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
+
+.animate-title {
+  animation: text-shadow-pulse 3s infinite;
+}
+
+.animate-fire {
+  animation: fire-pulse 3s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.animate-float {
+  animation: float-fire 6s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.animate-hover-pulse {
+  transition: transform 0.3s ease;
+}
+.animate-hover-pulse:hover {
+  animation: hover-pulse 1s infinite;
+}
+
+/* Delays para elementos secuenciales */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+.delay-900 { animation-delay: 900ms; }
+.delay-1000 { animation-delay: 1000ms; }
+
+/* Duración personalizada */
+.duration-1000 { animation-duration: 1000ms; }
+.duration-2000 { animation-duration: 2000ms; }
+.duration-3000 { animation-duration: 3000ms; }
+.duration-4000 { animation-duration: 4000ms; }
+.duration-5000 { animation-duration: 5000ms; }

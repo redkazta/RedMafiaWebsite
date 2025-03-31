@@ -1,11 +1,41 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Release, News, Concert, GalleryItem } from "@shared/schema";
+import { ChevronRight, Calendar, MapPin, Music, Camera, Newspaper, Mail, Info, Play, Disc, Flame } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ChevronRight, Calendar, MapPin, Music, Camera, Newspaper, Mail, Info, Play, Disc } from "lucide-react";
+
+// Componentes animados
+import { FireParticles, Equalizer, NeonLine, BloodCorner } from "@/components/animated";
 
 export default function Home() {
+  // Referencias para animaciones y efectos
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [activeAudio, setActiveAudio] = useState<boolean>(false);
+  const [animateFireParticles, setAnimateFireParticles] = useState<boolean>(true);
+  
+  // Ajustar reproductor cuando se hace scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const threshold = 400; // Umbral para activar efectos de sonido
+      
+      if (scrollY > threshold && !activeAudio) {
+        setActiveAudio(true);
+      } else if (scrollY < threshold && activeAudio) {
+        setActiveAudio(false);
+      }
+      
+      // Reducir las partículas en scroll para mejor rendimiento
+      setAnimateFireParticles(scrollY < 800);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeAudio]);
+
+  // Datos de la API
   const { data: releases } = useQuery<Release[]>({
     queryKey: ['/api/releases'],
   });
@@ -24,7 +54,17 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0A0A0A]">
-      <Navbar />
+      {/* Efectos visuales */}
+      {animateFireParticles && (
+        <FireParticles 
+          className="fixed left-0 bottom-0 h-[400px] w-screen" 
+          intensity={5}
+          particleCount={30}
+          active={true}
+          width={window.innerWidth}
+          height={400}
+        />
+      )}
       
       {/* Hero Section */}
       <section className="relative h-[85vh] flex items-center bg-black text-white overflow-hidden">
@@ -385,7 +425,31 @@ export default function Home() {
         </div>
       </section>
       
-      <Footer />
+      {/* Ecualizador en la sección inferior */}
+      <div className="fixed bottom-4 left-4 z-40">
+        <div className="bg-black/70 p-2 rounded-full flex items-center gap-2 backdrop-blur-sm red-mafia-border">
+          <div className="w-6 h-6 flex items-center justify-center rounded-full bg-[#950101] text-white">
+            <Flame size={14} />
+          </div>
+          <Equalizer active={activeAudio} width={50} height={20} barCount={6} />
+        </div>
+      </div>
+      
+      {/* Líneas de neón decorativas */}
+      <NeonLine 
+        className="fixed top-0 left-0 w-full" 
+        height="2px" 
+        color="rgba(255, 0, 0, 0.7)"
+        pulse={true}
+        zIndex={10}
+      />
+      <NeonLine 
+        className="fixed bottom-0 left-0 w-full" 
+        height="2px" 
+        color="rgba(255, 0, 0, 0.5)"
+        pulse={true}
+        zIndex={10}
+      />
     </div>
   );
 }
