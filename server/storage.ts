@@ -82,9 +82,9 @@ export class MemStorage implements IStorage {
       description: "Nuestro último lanzamiento explora nuevas dimensiones sonoras mientras mantiene la esencia que nos caracteriza.",
       coverImage: "https://images.unsplash.com/photo-1544656376-ffe19d4b7353?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
       audioFiles: [
-        "https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3",
-        "https://assets.mixkit.co/music/preview/mixkit-hazy-after-hours-132.mp3",
-        "https://assets.mixkit.co/music/preview/mixkit-rock-beat-165.mp3"
+        "https://cdn.pixabay.com/download/audio/2022/01/18/audio_b3d53de9e3.mp3",
+        "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3",
+        "https://cdn.pixabay.com/download/audio/2022/02/07/audio_d6ccf0249a.mp3"
       ],
       trackTitles: [
         "Puño de Hierro",
@@ -101,7 +101,7 @@ export class MemStorage implements IStorage {
       description: "Un adelanto exclusivo de nuestro próximo proyecto con un sonido más íntimo y personal.",
       coverImage: "https://images.unsplash.com/photo-1526142684086-7ebd69df27a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
       audioFiles: [
-        "https://assets.mixkit.co/music/preview/mixkit-hip-hop-02-614.mp3"
+        "https://cdn.pixabay.com/download/audio/2022/10/25/audio_946bc8fd41.mp3"
       ],
       trackTitles: [
         "Noche Eterna"
@@ -116,9 +116,9 @@ export class MemStorage implements IStorage {
       description: "Una colección de canciones que rinden homenaje a nuestros orígenes y primeras influencias.",
       coverImage: "https://images.unsplash.com/photo-1504509546545-e000b4a62425?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
       audioFiles: [
-        "https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3",
-        "https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3",
-        "https://assets.mixkit.co/music/preview/mixkit-epical-drums-01-671.mp3"
+        "https://cdn.pixabay.com/download/audio/2022/01/20/audio_1faf8d7bbd.mp3",
+        "https://cdn.pixabay.com/download/audio/2022/03/15/audio_8cb749d484.mp3",
+        "https://cdn.pixabay.com/download/audio/2022/08/02/audio_884fe5950d.mp3"
       ],
       trackTitles: [
         "Origen",
