@@ -2,8 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { contactSchema, insertConcertSchema, insertGallerySchema, insertNewsSchema, insertReleaseSchema } from "@shared/schema";
-import { z } from "zod";
-import { ZodError } from "zod-validation-error";
+import { z, ZodError } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Rutas API para Red Mafia
@@ -44,8 +43,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const newRelease = await storage.createRelease(releaseData);
       res.status(201).json(newRelease);
     } catch (error) {
-      if (error instanceof ZodError) {
-        return res.status(400).json({ message: "Datos inválidos", errors: error.errors });
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
       }
       res.status(500).json({ message: "Error al crear el lanzamiento" });
     }
@@ -87,8 +86,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const newConcert = await storage.createConcert(concertData);
       res.status(201).json(newConcert);
     } catch (error) {
-      if (error instanceof ZodError) {
-        return res.status(400).json({ message: "Datos inválidos", errors: error.errors });
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
       }
       res.status(500).json({ message: "Error al crear el concierto" });
     }
@@ -130,8 +129,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const newNews = await storage.createNewsItem(newsData);
       res.status(201).json(newNews);
     } catch (error) {
-      if (error instanceof ZodError) {
-        return res.status(400).json({ message: "Datos inválidos", errors: error.errors });
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
       }
       res.status(500).json({ message: "Error al crear la noticia" });
     }
@@ -173,8 +172,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const newGalleryItem = await storage.createGalleryItem(galleryData);
       res.status(201).json(newGalleryItem);
     } catch (error) {
-      if (error instanceof ZodError) {
-        return res.status(400).json({ message: "Datos inválidos", errors: error.errors });
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
       }
       res.status(500).json({ message: "Error al crear el elemento de galería" });
     }
@@ -191,8 +190,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         id: newContact.id
       });
     } catch (error) {
-      if (error instanceof ZodError) {
-        return res.status(400).json({ message: "Datos inválidos", errors: error.errors });
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
       }
       res.status(500).json({ message: "Error al enviar el mensaje" });
     }
