@@ -6,6 +6,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .drop-shadow-red {
+    filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-drip {
+    animation: drip 5s ease-in infinite;
+  }
+  
+  .red-mafia-glow {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+  }
+  
+  .red-mafia-title {
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+  }
+  
+  .red-mafia-border {
+    border: 1px solid rgba(255, 0, 0, 0.3);
+  }
+}
+
 @layer base {
   /* Variables para tema por defecto (dark) */
   :root {
