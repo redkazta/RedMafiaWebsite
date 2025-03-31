@@ -31,10 +31,13 @@ export default function Footer() {
             <h4 className="red-mafia-title text-xl mb-6">ENLACES RÁPIDOS</h4>
             <ul className="space-y-3">
               <li><Link href="/" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Inicio</Link></li>
+              <li><Link href="/nosotros" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Nosotros</Link></li>
               <li><Link href="/lanzamientos" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Música</Link></li>
               <li><Link href="/conciertos" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Conciertos</Link></li>
               <li><Link href="/noticias" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Noticias</Link></li>
               <li><Link href="/galeria" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Galería</Link></li>
+              <li><Link href="/tienda" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Tienda</Link></li>
+              <li><Link href="/media-kit" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Media Kit</Link></li>
               <li><Link href="/contacto" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Contacto</Link></li>
             </ul>
           </div>
@@ -42,10 +45,11 @@ export default function Footer() {
           <div>
             <h4 className="red-mafia-title text-xl mb-6">TIENDA OFICIAL</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Música</a></li>
-              <li><a href="#" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Merchandising</a></li>
-              <li><a href="#" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Ediciones especiales</a></li>
-              <li><a href="#" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Envíos</a></li>
+              <li><Link href="/tienda" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Todos los Productos</Link></li>
+              <li><Link href="/tienda#productos" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Música</Link></li>
+              <li><Link href="/tienda#productos" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Camisetas</Link></li>
+              <li><Link href="/tienda#productos" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Accesorios</Link></li>
+              <li><Link href="/tienda#productos" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Ediciones Especiales</Link></li>
             </ul>
           </div>
           

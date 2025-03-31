@@ -40,20 +40,25 @@ export default function Navbar() {
         </div>
         
         {/* Menú de navegación para desktop */}
-        <ul className="hidden md:flex space-x-6 items-center">
+        <ul className="hidden md:flex space-x-5 items-center">
           <li>
             <Link href="/" className="nav-link text-[#F5F5F5] hover:text-[#FF0000] transition-colors relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bottom-[-3px] after:left-0 after:bg-[#D10000] after:transition-[width] after:duration-300 hover:after:w-full">
               Inicio
             </Link>
           </li>
           <li>
+            <Link href="/nosotros" className="nav-link text-[#F5F5F5] hover:text-[#FF0000] transition-colors relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bottom-[-3px] after:left-0 after:bg-[#D10000] after:transition-[width] after:duration-300 hover:after:w-full">
+              Nosotros
+            </Link>
+          </li>
+          <li>
             <Link href="/lanzamientos" className="nav-link text-[#F5F5F5] hover:text-[#FF0000] transition-colors relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bottom-[-3px] after:left-0 after:bg-[#D10000] after:transition-[width] after:duration-300 hover:after:w-full">
-              Lanzamientos
+              Música
             </Link>
           </li>
           <li>
             <Link href="/conciertos" className="nav-link text-[#F5F5F5] hover:text-[#FF0000] transition-colors relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bottom-[-3px] after:left-0 after:bg-[#D10000] after:transition-[width] after:duration-300 hover:after:w-full">
-              Presentaciones
+              Conciertos
             </Link>
           </li>
           <li>
@@ -64,6 +69,16 @@ export default function Navbar() {
           <li>
             <Link href="/galeria" className="nav-link text-[#F5F5F5] hover:text-[#FF0000] transition-colors relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bottom-[-3px] after:left-0 after:bg-[#D10000] after:transition-[width] after:duration-300 hover:after:w-full">
               Galería
+            </Link>
+          </li>
+          <li>
+            <Link href="/tienda" className="nav-link text-[#F5F5F5] hover:text-[#FF0000] transition-colors relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bottom-[-3px] after:left-0 after:bg-[#D10000] after:transition-[width] after:duration-300 hover:after:w-full">
+              Tienda
+            </Link>
+          </li>
+          <li>
+            <Link href="/media-kit" className="nav-link text-[#F5F5F5] hover:text-[#FF0000] transition-colors relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bottom-[-3px] after:left-0 after:bg-[#D10000] after:transition-[width] after:duration-300 hover:after:w-full">
+              Media
             </Link>
           </li>
           <li>
