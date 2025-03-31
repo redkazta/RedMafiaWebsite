@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, timestamp, array } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -47,7 +47,7 @@ export const concerts = pgTable("concerts", {
   venue: text("venue").notNull(),
   doors: text("doors").notNull(), // Hora de apertura
   start: text("start").notNull(), // Hora de inicio
-  tags: text("tags").array().notNull(),
+  tags: text("tags").array(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
