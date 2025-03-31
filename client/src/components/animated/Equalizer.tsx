@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface EqualizerProps {
   className?: string;
@@ -12,36 +12,66 @@ interface EqualizerProps {
 export default function Equalizer({
   className = '',
   barCount = 5,
-  active = true,
-  color = 'var(--color-primary)',
+  active = false,
+  color = 'white',
   height = 20,
-  width = 30,
+  width = 30
 }: EqualizerProps) {
-  const [bars, setBars] = useState<number[]>([]);
-
-  // Crear barras con retardos aleatorios
+  const [bars, setBars] = useState<{ id: number; maxHeight: number; animationDuration: string }[]>([]);
+  const animationRef = useRef<number | null>(null);
+  const requestRef = useRef<number | null>(null);
+  
+  // Generar barras aleatorias
   useEffect(() => {
-    const newBars = Array.from({ length: barCount }, (_, i) => {
-      return Math.floor(Math.random() * 100);
-    });
+    const newBars = Array.from({ length: barCount }, (_, i) => ({
+      id: i,
+      maxHeight: active ? Math.random() * (height * 0.7) + (height * 0.3) : 2,
+      animationDuration: `${0.4 + Math.random() * 0.4}s`
+    }));
+    
     setBars(newBars);
-  }, [barCount]);
-
+  }, [barCount, active, height]);
+  
+  // Actualizar la altura de las barras en un intervalo
+  useEffect(() => {
+    if (!active) return;
+    
+    const updateBars = () => {
+      setBars(prev => 
+        prev.map(bar => ({
+          ...bar,
+          maxHeight: Math.random() * (height * 0.7) + (height * 0.3)
+        }))
+      );
+      
+      animationRef.current = window.setTimeout(updateBars, 500);
+    };
+    
+    updateBars();
+    
+    return () => {
+      if (animationRef.current) {
+        clearTimeout(animationRef.current);
+      }
+    };
+  }, [active, height]);
+  
   return (
     <div 
-      className={`flex items-end justify-center space-x-1 ${className}`}
-      style={{ height: `${height}px`, width: `${width}px` }}
+      className={`flex items-end justify-center gap-[2px] ${className}`}
+      style={{ 
+        width: `${width}px`,
+        height: `${height}px`
+      }}
     >
-      {bars.map((value, index) => (
+      {bars.map(bar => (
         <div
-          key={index}
-          className={`w-1 rounded-t-sm ${active ? 'animate-soundwave' : ''}`}
+          key={bar.id}
+          className="w-[2px] rounded-t-sm transition-all"
           style={{
+            height: active ? `${bar.maxHeight}px` : '2px',
             backgroundColor: color,
-            opacity: active ? 0.8 : 0.4,
-            height: '30%',
-            animationDelay: `${index * 100}ms`,
-            animationDuration: `${600 + Math.random() * 400}ms`,
+            transitionDuration: bar.animationDuration
           }}
         />
       ))}

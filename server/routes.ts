@@ -3,6 +3,30 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { contactSchema, insertConcertSchema, insertGallerySchema, insertNewsSchema, insertReleaseSchema } from "@shared/schema";
 import { z, ZodError } from "zod";
+import { WebSocketServer, WebSocket } from 'ws';
+import { v4 as uuidv4 } from 'uuid';
+
+// Interfaces para mensajes de WebSocket
+interface WsUser {
+  id: string;
+  username: string;
+  ws: WebSocket;
+  isAdmin?: boolean;
+}
+
+interface WsMessage {
+  type: 'message' | 'join' | 'leave' | 'system' | 'reaction';
+  userId: string;
+  username: string; 
+  content?: string;
+  timestamp: number;
+  messageId?: string;
+  reaction?: string;
+  isAdmin?: boolean;
+}
+
+// Almacenamiento temporal de usuarios conectados
+const connectedUsers: Map<string, WsUser> = new Map();
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Rutas API para Red Mafia
@@ -198,5 +222,143 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+  
+  // Configuración de WebSocket
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  
+  // Función para transmitir mensajes a todos los usuarios conectados
+  function broadcastMessage(message: WsMessage): void {
+    const messageString = JSON.stringify(message);
+    
+    connectedUsers.forEach(user => {
+      if (user.ws.readyState === WebSocket.OPEN) {
+        user.ws.send(messageString);
+      }
+    });
+  }
+  
+  // Manejar conexiones de WebSocket
+  wss.on('connection', (ws: WebSocket) => {
+    const userId = uuidv4();
+    let username = '';
+    
+    // Evento cuando se recibe un mensaje
+    ws.on('message', (data: string) => {
+      try {
+        const message = JSON.parse(data);
+        
+        // Manejar diferentes tipos de mensajes
+        switch (message.type) {
+          case 'join':
+            // Usuario se une al chat
+            username = message.username || `Usuario_${userId.substring(0, 5)}`;
+            
+            // Almacenar información del usuario
+            connectedUsers.set(userId, {
+              id: userId,
+              username,
+              ws,
+              isAdmin: message.isAdmin || false
+            });
+            
+            // Notificar a todos que un nuevo usuario se unió
+            broadcastMessage({
+              type: 'join',
+              userId,
+              username,
+              timestamp: Date.now(),
+              isAdmin: message.isAdmin || false
+            });
+            
+            // Enviar mensaje de sistema de bienvenida solo al usuario que se unió
+            ws.send(JSON.stringify({
+              type: 'system',
+              userId: 'system',
+              username: 'RED MAFIA',
+              content: `¡Bienvenido al chat, ${username}!`,
+              timestamp: Date.now(),
+              isAdmin: true
+            }));
+            break;
+            
+          case 'message':
+            // Verificar que el usuario esté registrado
+            if (!username) {
+              ws.send(JSON.stringify({
+                type: 'system',
+                userId: 'system',
+                username: 'Sistema',
+                content: 'Por favor, únete al chat primero',
+                timestamp: Date.now()
+              }));
+              return;
+            }
+            
+            // Transmitir mensaje a todos
+            broadcastMessage({
+              type: 'message',
+              userId,
+              username,
+              content: message.content,
+              timestamp: Date.now(),
+              messageId: uuidv4(),
+              isAdmin: connectedUsers.get(userId)?.isAdmin || false
+            });
+            break;
+            
+          case 'reaction':
+            // Agregar reacción a un mensaje
+            broadcastMessage({
+              type: 'reaction',
+              userId,
+              username,
+              messageId: message.messageId,
+              reaction: message.reaction,
+              timestamp: Date.now()
+            });
+            break;
+        }
+      } catch (error) {
+        console.error('Error al procesar mensaje de WebSocket:', error);
+      }
+    });
+    
+    // Evento de desconexión
+    ws.on('close', () => {
+      if (username && connectedUsers.has(userId)) {
+        // Notificar a todos que el usuario se fue
+        broadcastMessage({
+          type: 'leave',
+          userId,
+          username,
+          timestamp: Date.now()
+        });
+        
+        // Eliminar usuario de la lista
+        connectedUsers.delete(userId);
+      }
+    });
+    
+    // Enviar datos iniciales de conexión
+    ws.send(JSON.stringify({
+      type: 'system',
+      userId: 'system',
+      username: 'Sistema',
+      content: 'Conectado al chat. Por favor, establece tu nombre de usuario.',
+      timestamp: Date.now()
+    }));
+  });
+  
+  // API para obtener información sobre el chat
+  app.get("/api/chat/users", (req, res) => {
+    const users = Array.from(connectedUsers.values()).map(user => ({
+      id: user.id,
+      username: user.username,
+      isAdmin: user.isAdmin || false
+    }));
+    
+    res.json(users);
+  });
+  
   return httpServer;
 }

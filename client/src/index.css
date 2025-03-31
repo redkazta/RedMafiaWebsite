@@ -7,6 +7,7 @@
 @tailwind utilities;
 
 @layer base {
+  /* Variables para tema por defecto (dark) */
   :root {
     --color-primary: #FF0000;
     --color-primary-dark: #950101;
@@ -16,6 +17,54 @@
     --color-background-alt: #1A1A1A;
     --color-text: #F5F5F5;
     --color-text-muted: #AAAAAA;
+    --color-border: #2D0000;
+    --color-card-bg: #1E1E1E;
+    --color-card-hover: #2A1010;
+    --color-gradient-start: rgba(149, 1, 1, 0.05);
+    --color-gradient-end: rgba(149, 1, 1, 0.03);
+    --color-glow-intensity: 0.5;
+    --transition-speed: 0.3s;
+    --blur-intensity: 10px;
+  }
+
+  /* Tema oscuro extremo */
+  .theme-darker {
+    --color-primary: #FF0000;
+    --color-primary-dark: #7A0000;
+    --color-primary-light: #FF3333;
+    --color-accent: #FFC800;
+    --color-background: #050505;
+    --color-background-alt: #0F0F0F;
+    --color-text: #E0E0E0;
+    --color-text-muted: #888888;
+    --color-border: #1A0000;
+    --color-card-bg: #0F0F0F;
+    --color-card-hover: #1A0A0A;
+    --color-gradient-start: rgba(120, 1, 1, 0.03);
+    --color-gradient-end: rgba(120, 1, 1, 0.02);
+    --color-glow-intensity: 0.4;
+    --transition-speed: 0.4s;
+    --blur-intensity: 15px;
+  }
+
+  /* Tema fuego */
+  .theme-fire {
+    --color-primary: #FF3300;
+    --color-primary-dark: #C50000;
+    --color-primary-light: #FF5533;
+    --color-accent: #FFAA00;
+    --color-background: #0A0000;
+    --color-background-alt: #1A0505;
+    --color-text: #FFF5F0;
+    --color-text-muted: #CCA5A0;
+    --color-border: #5A0000;
+    --color-card-bg: #2A0A05;
+    --color-card-hover: #3A1510;
+    --color-gradient-start: rgba(220, 20, 1, 0.08);
+    --color-gradient-end: rgba(255, 100, 0, 0.06);
+    --color-glow-intensity: 0.8;
+    --transition-speed: 0.2s;
+    --blur-intensity: 8px;
   }
 
   * {
@@ -28,8 +77,10 @@
     color: var(--color-text);
     overflow-x: hidden;
     background-image: 
-      radial-gradient(circle at 20% 50%, rgba(149, 1, 1, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(149, 1, 1, 0.03) 0%, transparent 60%);
+      radial-gradient(circle at 20% 50%, var(--color-gradient-start) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, var(--color-gradient-end) 0%, transparent 60%);
+    transition: background-color var(--transition-speed) ease-in-out, 
+                color var(--transition-speed) ease-in-out;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -241,5 +292,76 @@
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+  
+  /* Efecto de partículas de fuego */
+  .fire-particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 50, 0, 0.8) 0%, rgba(255, 120, 0, 0.4) 70%, transparent 100%);
+    border-radius: 50%;
+    filter: blur(1px);
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+  
+  /* Mejoras específicas para temas */
+  
+  /* Para tema fuego - textos más intensos */
+  .theme-fire .red-mafia-title {
+    text-shadow: 0 0 10px rgba(255, 40, 0, 0.7);
+    animation: pulse-intensity 3s infinite;
+  }
+  
+  /* Para tema fuego - bordes ardientes */
+  .theme-fire .red-mafia-border {
+    border-color: rgba(255, 60, 0, 0.5);
+    box-shadow: 0 0 8px rgba(255, 60, 0, 0.3);
+  }
+  
+  .theme-fire .red-mafia-border:hover {
+    border-color: rgba(255, 120, 0, 0.9);
+    box-shadow: 0 0 15px rgba(255, 80, 0, 0.5);
+  }
+  
+  /* Para tema darker - efectos más tenues */
+  .theme-darker .red-mafia-glow {
+    box-shadow: 0 0 8px rgba(200, 0, 0, 0.3);
+  }
+  
+  .theme-darker .red-mafia-glow:hover {
+    box-shadow: 0 0 12px rgba(200, 0, 0, 0.5);
+  }
+  
+  /* Fondos dinámicos específicos por tema */
+  .theme-fire .dynamic-bg {
+    background-image:
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657 8.787 5.07 13.857 0H11.03zm32.284 0L49.8 6.485 48.384 7.9l-7.9-7.9h2.83zM16.686 0L10.2 6.485 11.616 7.9l7.9-7.9h-2.83zm20.97 0l9.315 9.314-1.414 1.414L34.828 0h2.83zM22.344 0L13.03 9.314l1.414 1.414L25.172 0h-2.83zM32 0l12.142 12.142-1.414 1.414L30 .828 17.272 13.556l-1.414-1.414L28 0h4zM.284 0l28 28-1.414 1.414L0 2.544v2.83L26.272 32.37l-1.414 1.414L0 8.685v2.83L23.03 36.627l-1.414 1.414L0 14.828v2.83L19.8 40.9l-1.414 1.413L0 20.97v2.83L16.556 47.13l-1.414 1.415L0 27.113v2.83L13.314 56.37l-1.414 1.414L0 33.255v2.83l10.1 10.1-1.416 1.416L0 39.456v2.83l6.856 6.856-1.415 1.413L0 45.607v2.83l3.613 3.612-1.414 1.414L0 51.77v2.83l.343.343-1.415 1.414L0 57.85v2.83l4-4L0 60h60L56 56l4 4V57.85l-1.343-1.343-1.413 1.414.342.343v-2.83l-2.198-2.197-1.415 1.414 3.613 3.612v-2.83L53.77 54.42l-1.414 1.413 6.855 6.857v-2.83l-10.1-10.1-1.415 1.414 10.1 10.1v-2.83l-11.9-11.9-1.413 1.414 13.313 13.313v-2.83l-16.97-16.97-1.414 1.413 16.97 16.97v-2.83L40.9 40.9l-1.414 1.413 19.799 19.8v-2.83l-22.243-22.244-1.414 1.414L56.37 59.244v-2.83L36.628 36.627l-1.414 1.414L56.37 59.243v-2.83L32.37 32.37l-1.414 1.414 25.04 25.04v-2.83L30 30v-2L60 57.85v-2.83L32.828 27.83l-1.414 1.414L60 57.85v-2.83L35.557 29.728l-1.414 1.414L60 57.85v-2.83L38.284 31.627l-1.414 1.414L60 57.85v-2.83L41.03 33.523l-1.414 1.414L60 57.85v-2.83l-20.2-20.2-1.414 1.414L60 57.85v-2.83L43.716 38.485l-1.415 1.414L60 57.85v-2.83L46.97 39.48l-1.414 1.415 14.444 14.444v-2.83L50.224 42.54l-1.414 1.415 11.19 11.19v-2.83l-9.83-9.83-1.414 1.414 9.83 9.83v-2.83l-7.544-7.544-1.414 1.414 7.544 7.544v-2.83l-5.258-5.256-1.414 1.414 5.257 5.257v-2.83l-2.97-2.97-1.415 1.413 2.97 2.97v-2.83l-.685-.685-1.414 1.414.684.684v-2.83l1.98-1.98-1.413-1.415-1.98 1.98 1.413 1.416zM0 57.85v2.137h60v-2.137H0z' fill='%23840000' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+  }
+  
+  /* Efectos de hover pulsantes para el tema de fuego */
+  .theme-fire .pulse-hover:hover {
+    animation: pulse-intensity 1s infinite;
+  }
+  
+  /* Efecto de texto brillante para el tema de fuego */
+  .theme-fire .glow-text {
+    text-shadow: 0 0 5px var(--color-primary);
+  }
+  
+  /* Efectos de fuego para bordes */
+  .fire-border {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .theme-fire .fire-border::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+    animation: shimmer 2s linear infinite;
   }
 }

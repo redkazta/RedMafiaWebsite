@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Equalizer from './Equalizer';
+import { useState, useRef, useEffect } from 'react';
+import { Play, Pause, Volume2, VolumeX, X, ChevronUp, Music } from 'lucide-react';
+import { Equalizer } from '.';
 
 interface FloatingPlayerProps {
   className?: string;
@@ -15,231 +16,213 @@ interface FloatingPlayerProps {
 export default function FloatingPlayer({
   className = '',
   track,
-  autoPlay = false,
+  autoPlay = false
 }: FloatingPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMiniPlayer, setIsMiniPlayer] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [currentTime, setCurrentTime] = useState('0:00');
-  const [duration, setDuration] = useState('0:00');
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Reproducir automáticamente si se proporciona
+  // Estados
+  const [isPlaying, setIsPlaying] = useState(autoPlay);
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+  
+  // Referencias
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  
+  // Comprobar si hay una pista disponible
+  if (!track) return null;
+  
+  // Reproducir/pausar según el estado
   useEffect(() => {
-    if (track && autoPlay && audioRef.current) {
-      audioRef.current.play().catch(e => console.error('Error en reproducción automática:', e));
-    }
-  }, [track, autoPlay]);
-
-  // Manejadores para audio
-  const handlePlayPause = () => {
     if (!audioRef.current) return;
     
     if (isPlaying) {
-      audioRef.current.pause();
+      audioRef.current.play().catch(error => {
+        console.error('Error al reproducir:', error);
+        setIsPlaying(false);
+      });
     } else {
-      audioRef.current.play().catch(e => console.error('Error al reproducir:', e));
+      audioRef.current.pause();
     }
+  }, [isPlaying]);
+  
+  // Manejar eventos de cambio de estado del audio
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
     
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+    };
+    
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration);
+    };
+    
+    const handleEnded = () => {
+      setIsPlaying(false);
+    };
+    
+    // Agregar event listeners
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('ended', handleEnded);
+    
+    // Limpiar event listeners
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, []);
+  
+  // Funciones de control
+  const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
-
-  const handleTimeUpdate = () => {
+  
+  const toggleMute = () => {
     if (!audioRef.current) return;
     
-    const current = audioRef.current.currentTime;
-    const total = audioRef.current.duration || 0;
-    
-    // Actualizar progreso
-    setProgress((current / total) * 100);
-    
-    // Actualizar tiempo actual
-    const currentMinutes = Math.floor(current / 60);
-    const currentSeconds = Math.floor(current % 60);
-    setCurrentTime(`${currentMinutes}:${currentSeconds.toString().padStart(2, '0')}`);
-    
-    // Actualizar duración total
-    const durationMinutes = Math.floor(total / 60);
-    const durationSeconds = Math.floor(total % 60);
-    setDuration(`${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`);
+    setIsMuted(!isMuted);
+    audioRef.current.muted = !isMuted;
   };
-
-  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!audioRef.current) return;
+  
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!progressBarRef.current || !audioRef.current) return;
     
-    const progressBar = e.currentTarget;
-    const bounds = progressBar.getBoundingClientRect();
-    const x = e.clientX - bounds.left;
-    const width = bounds.width;
-    const percentage = x / width;
+    const progressRect = progressBarRef.current.getBoundingClientRect();
+    const seekPosition = (e.clientX - progressRect.left) / progressRect.width;
     
-    audioRef.current.currentTime = percentage * audioRef.current.duration;
+    if (seekPosition >= 0 && seekPosition <= 1) {
+      const seekTime = duration * seekPosition;
+      audioRef.current.currentTime = seekTime;
+      setCurrentTime(seekTime);
+    }
   };
-
-  // Si no hay pista, no mostrar nada
-  if (!track) return null;
-
+  
+  // Formatear tiempo (segundos a MM:SS)
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return '00:00';
+    
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+  
+  if (isHidden) return null;
+  
+  // Versión minimizada (solo botón flotante)
+  if (isMinimized) {
+    return (
+      <div className={`fixed bottom-4 left-4 z-30 ${className}`}>
+        <button
+          onClick={() => setIsMinimized(false)}
+          className="relative w-12 h-12 rounded-full bg-[#950101] hover:bg-[#FF0000] text-white flex items-center justify-center shadow-lg group transition-colors"
+        >
+          {isPlaying ? (
+            <Equalizer active={true} barCount={3} width={16} height={12} />
+          ) : (
+            <Music size={20} />
+          )}
+          
+          {/* Tooltip con el título */}
+          <div className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-[#1A1A1A] text-white text-xs py-1 px-2 rounded shadow-lg w-max max-w-[150px] whitespace-nowrap overflow-hidden text-ellipsis invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all">
+            {track.title}
+          </div>
+        </button>
+      </div>
+    );
+  }
+  
+  // Versión completa (reproductor flotante)
   return (
-    <div
-      className={`fixed bottom-4 right-4 z-40 rounded-lg shadow-lg transition-all duration-300 animate-fade-in ${className} ${
-        isMiniPlayer 
-          ? 'w-20 h-20 bg-black/70 backdrop-blur-sm hover:w-60' 
-          : 'w-80 h-auto bg-black/90 backdrop-blur-md'
-      } red-mafia-border overflow-hidden`}
-    >
-      {/* Audio element */}
-      <audio
-        ref={audioRef}
-        src={track.audioSrc}
-        onTimeUpdate={handleTimeUpdate}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onEnded={() => setIsPlaying(false)}
-      />
-
-      {/* Mini player view */}
-      {isMiniPlayer && (
-        <div className="relative w-full h-full flex items-center overflow-hidden group cursor-pointer" onClick={() => setIsMiniPlayer(false)}>
-          {/* Cover image */}
-          <div className="w-20 h-20 shrink-0">
-            {track.coverImage ? (
-              <img
-                src={track.coverImage}
-                alt={track.title}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full bg-[#950101]/50 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                </svg>
-              </div>
-            )}
-          </div>
-          
-          {/* Expanded content (visible on hover) */}
-          <div className="hidden pl-2 flex-1 overflow-hidden whitespace-nowrap group-hover:block">
-            <div className="text-sm font-semibold text-white">{track.title}</div>
-            {track.artist && <div className="text-xs text-gray-300">{track.artist}</div>}
-            
-            <div className="mt-2 flex space-x-2 items-center">
-              <button
-                className="w-8 h-8 rounded-full bg-[#950101] flex items-center justify-center text-white hover:bg-[#FF0000] transition-colors"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePlayPause();
-                }}
-              >
-                {isPlaying ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                )}
-              </button>
-              
-              <Equalizer active={isPlaying} width={40} height={16} barCount={4} />
+    <div className={`fixed bottom-4 left-4 z-30 ${className}`}>
+      <div className="flex items-center bg-[#1A0505] text-white rounded-full shadow-lg border border-[#950101]/30 p-2 w-auto max-w-[320px] min-w-[240px]">
+        {/* Audio oculto */}
+        <audio ref={audioRef} src={track.audioSrc} preload="metadata" />
+        
+        {/* Portada o icono */}
+        <div className="relative flex-shrink-0 w-8 h-8 rounded-full overflow-hidden mr-2">
+          {track.coverImage ? (
+            <img
+              src={track.coverImage}
+              alt={track.title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full bg-[#2D0000] flex items-center justify-center">
+              <Music size={14} className="text-[#950101]" />
             </div>
-          </div>
+          )}
           
-          {/* Animación en miniatura */}
-          <div className="absolute bottom-1 right-1 pointer-events-none">
-            <Equalizer active={isPlaying} width={16} height={8} barCount={3} />
-          </div>
+          {/* Indicador de reproducción */}
+          {isPlaying && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <Equalizer barCount={3} active={isPlaying} width={15} height={10} />
+            </div>
+          )}
         </div>
-      )}
-
-      {/* Full player view */}
-      {!isMiniPlayer && (
-        <div className="p-3">
-          <div className="flex justify-between items-center mb-2">
-            <h4 className="text-sm font-bold text-white truncate flex-1">{track.title}</h4>
-            <button
-              className="text-gray-400 hover:text-white"
-              onClick={() => setIsMiniPlayer(true)}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Album art & info */}
-          <div className="flex space-x-3 mb-3">
-            <div className="w-16 h-16 shrink-0 rounded overflow-hidden">
-              {track.coverImage ? (
-                <img
-                  src={track.coverImage}
-                  alt={track.title}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-[#950101]/50 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-                  </svg>
-                </div>
-              )}
-            </div>
-            <div className="flex-1">
-              {track.artist && <div className="text-sm text-gray-300 mb-1">{track.artist}</div>}
-              <div className="flex items-center">
-                <Equalizer active={isPlaying} width={50} height={20} barCount={5} />
-              </div>
-            </div>
-          </div>
-
-          {/* Controles y barra de progreso */}
-          <div className="mb-2">
-            <div 
-              className="w-full h-1 bg-gray-700 rounded-full overflow-hidden cursor-pointer"
-              onClick={handleProgressClick}
+        
+        {/* Información y controles */}
+        <div className="flex-1 min-w-0">
+          {/* Título */}
+          <div className="text-xs font-medium truncate">{track.title}</div>
+          
+          {/* Barra de progreso */}
+          <div className="flex items-center gap-1.5 mt-0.5">
+            <span className="text-[9px] text-[#F5F5F5]/70">{formatTime(currentTime)}</span>
+            
+            <div
+              ref={progressBarRef}
+              className="flex-1 h-1 bg-[#333] rounded-full overflow-hidden cursor-pointer relative"
+              onClick={handleSeek}
             >
               <div
-                className="h-full bg-[#FF0000]"
-                style={{ width: `${progress}%` }}
+                className="absolute top-0 left-0 h-full bg-[#950101]"
+                style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
               ></div>
             </div>
-            <div className="flex justify-between text-xs text-gray-400 mt-1">
-              <span>{currentTime}</span>
-              <span>{duration}</span>
-            </div>
-          </div>
-
-          {/* Botones de control */}
-          <div className="flex justify-center space-x-4">
-            <button className="text-gray-300 hover:text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.333 4zM4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8l-5.334 4z" />
-              </svg>
-            </button>
-            <button
-              className="w-10 h-10 rounded-full bg-[#950101] flex items-center justify-center text-white hover:bg-[#FF0000] transition-colors"
-              onClick={handlePlayPause}
-            >
-              {isPlaying ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              )}
-            </button>
-            <button className="text-gray-300 hover:text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z" />
-              </svg>
-            </button>
+            
+            <span className="text-[9px] text-[#F5F5F5]/70">{formatTime(duration)}</span>
           </div>
         </div>
-      )}
+        
+        {/* Botones de control */}
+        <div className="flex items-center ml-2 gap-1">
+          <button
+            onClick={togglePlay}
+            className="w-7 h-7 bg-[#950101] hover:bg-[#FF0000] rounded-full flex items-center justify-center transition-colors"
+          >
+            {isPlaying ? <Pause size={14} /> : <Play size={14} className="ml-0.5" />}
+          </button>
+          
+          <button
+            onClick={toggleMute}
+            className="p-1 rounded-full text-[#F5F5F5]/70 hover:text-white transition-colors"
+          >
+            {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+          </button>
+          
+          <button
+            onClick={() => setIsMinimized(true)}
+            className="p-1 rounded-full text-[#F5F5F5]/70 hover:text-white transition-colors"
+            title="Minimizar"
+          >
+            <ChevronUp size={14} />
+          </button>
+          
+          <button
+            onClick={() => setIsHidden(true)}
+            className="p-1 rounded-full text-[#F5F5F5]/70 hover:text-white transition-colors"
+            title="Cerrar"
+          >
+            <X size={14} />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
