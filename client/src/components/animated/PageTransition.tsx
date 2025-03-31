@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 
 interface PageTransitionProps {
@@ -10,112 +10,88 @@ interface PageTransitionProps {
 export default function PageTransition({ 
   children, 
   className = '',
-  duration = 300 
+  duration = 300
 }: PageTransitionProps) {
   const [location] = useLocation();
-  const [isVisible, setIsVisible] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState(location);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [currentPage, setCurrentPage] = useState<React.ReactNode>(children);
   
+  // Manejar cambios de ubicación
   useEffect(() => {
-    // Si la localización cambia, hacer que el contenido se desvanezca
-    if (location !== currentLocation) {
-      setIsVisible(false);
-      
-      // Después del tiempo de transición, actualiza la ubicación actual
-      const timeout = setTimeout(() => {
-        setCurrentLocation(location);
-        // Y luego hacer que el nuevo contenido aparezca
-        setIsVisible(true);
-      }, duration);
-      
-      return () => clearTimeout(timeout);
-    } else {
-      // Para la carga inicial, hacer que el contenido aparezca
-      setIsVisible(true);
-    }
-  }, [location, currentLocation, duration]);
+    setIsTransitioning(true);
+    
+    const timer = setTimeout(() => {
+      setCurrentPage(children);
+      setIsTransitioning(false);
+    }, duration / 2);
+    
+    return () => clearTimeout(timer);
+  }, [location, children, duration]);
   
   return (
-    <div
-      className={`transition-all overflow-hidden ${className}`}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: `translateY(${isVisible ? 0 : 10}px)`,
-        transitionDuration: `${duration}ms`,
-      }}
+    <div 
+      className={`relative overflow-hidden transition-opacity ease-in-out ${
+        isTransitioning ? 'opacity-0' : 'opacity-100'
+      } ${className}`}
+      style={{ transitionDuration: `${duration / 2}ms` }}
     >
-      {children}
+      {currentPage}
     </div>
   );
 }
 
-// Componente para transición con efecto rojo
 export function RedMafiaPageTransition({ 
   children, 
   className = '',
-  duration = 300 
+  duration = 300
 }: PageTransitionProps) {
   const [location] = useLocation();
-  const [isVisible, setIsVisible] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState(location);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [previousChildren, setPreviousChildren] = useState<React.ReactNode>(null);
+  const [currentChildren, setCurrentChildren] = useState<React.ReactNode>(children);
   
+  // Manejar cambios de ubicación
   useEffect(() => {
-    if (location !== currentLocation) {
-      setIsVisible(false);
+    if (location) {
+      // Guardar el contenido actual
+      setPreviousChildren(currentChildren);
       
-      const timeout = setTimeout(() => {
-        setCurrentLocation(location);
-        setIsVisible(true);
-      }, duration);
+      // Iniciar transición
+      setIsTransitioning(true);
       
-      return () => clearTimeout(timeout);
-    } else {
-      setIsVisible(true);
+      // Después de un pequeño retraso, actualizar el contenido
+      const timer = setTimeout(() => {
+        setCurrentChildren(children);
+        setIsTransitioning(false);
+      }, duration / 2); // Mitad del tiempo para que coincida con la animación CSS
+      
+      return () => clearTimeout(timer);
     }
-  }, [location, currentLocation, duration]);
+  }, [location, children, duration]);
   
   return (
-    <div className="relative overflow-hidden w-full min-h-screen">
-      {/* Overlay de transición */}
-      {!isVisible && (
-        <div
-          className="absolute inset-0 z-50 bg-black flex items-center justify-center"
-          style={{
-            animation: `fade-in-up ${duration}ms ease-in-out`,
-          }}
-        >
-          <div className="relative">
-            <h1 
-              className="text-4xl font-bold red-mafia-title animate-title"
-            >
-              RED MAFIA
-            </h1>
-            <div className="mt-2 flex justify-center space-x-2">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="w-1 h-5 rounded-full bg-red-600 animate-soundwave"
-                  style={{ 
-                    animationDelay: `${i * 100}ms`,
-                    animationDuration: '600ms' 
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-      
-      {/* Contenido real */}
+    <div className={`relative overflow-hidden ${className}`}>
+      {/* Capa de transición */}
       <div
-        className={`transition-all ${className}`}
-        style={{
-          opacity: isVisible ? 1 : 0,
-          transform: `translateY(${isVisible ? 0 : 15}px)`,
-          transitionDuration: `${duration}ms`,
-        }}
+        className={`fixed inset-0 bg-black z-50 transform transition-transform pointer-events-none ${
+          isTransitioning 
+            ? 'translate-y-0' 
+            : 'translate-y-full'
+        }`}
+        style={{ transitionDuration: `${duration}ms`, transitionTimingFunction: 'cubic-bezier(0.7, 0, 0.3, 1)' }}
       >
-        {children}
+        {/* Efecto de sangre para la transición */}
+        <div className="absolute top-0 left-0 right-0 h-8 bg-[#950101]"></div>
+      </div>
+      
+      {/* Contenido de la página */}
+      <div 
+        className={`transition-opacity ${
+          isTransitioning ? 'opacity-0' : 'opacity-100'
+        }`}
+        style={{ transitionDuration: `${duration / 2}ms`, transitionDelay: isTransitioning ? '0ms' : `${duration / 2}ms` }}
+      >
+        {currentChildren}
       </div>
     </div>
   );

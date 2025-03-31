@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface Particle {
   id: number;
@@ -22,119 +22,153 @@ interface FireParticlesProps {
 
 export default function FireParticles({
   className = '',
-  particleCount = 20,
-  active = true,
+  particleCount = 50,
+  active = false,
   intensity = 5,
-  width = 300,
-  height = 200,
+  width,
+  height
 }: FireParticlesProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [particles, setParticles] = useState<Particle[]>([]);
-  const animationFrameRef = useRef<number>(0);
+  const requestRef = useRef<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
-  // Normalizar la intensidad
-  const normalizedIntensity = Math.max(1, Math.min(10, intensity)) / 10;
-  
-  // Inicializar partículas
-  useEffect(() => {
-    if (!active) return;
-    
-    // Crear partículas iniciales
-    const initialParticles = Array.from({ length: particleCount }, (_, i) => createParticle(i));
-    setParticles(initialParticles);
-    
-    // Configurar animación
-    const animate = () => {
-      if (!canvasRef.current) return;
-      
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      
-      // Limpiar canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Actualizar y dibujar partículas
-      setParticles(prevParticles => {
-        const updatedParticles = prevParticles.map(particle => {
-          // Actualizar posición
-          particle.y -= particle.speedY;
-          
-          // Disminuir vida
-          particle.life -= 1;
-          
-          // Actualizar opacidad basada en vida
-          particle.opacity = (particle.life / particle.maxLife) * normalizedIntensity;
-          
-          // Dibujar partícula
-          const gradient = ctx.createRadialGradient(
-            particle.x, particle.y, 0,
-            particle.x, particle.y, particle.size
-          );
-          
-          gradient.addColorStop(0, `rgba(255, ${100 + Math.random() * 155}, 0, ${particle.opacity})`);
-          gradient.addColorStop(1, 'rgba(255, 0, 0, 0)');
-          
-          ctx.fillStyle = gradient;
-          ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-          ctx.fill();
-          
-          return particle;
-        });
-        
-        // Reemplazar partículas muertas
-        const newParticles = updatedParticles
-          .filter(p => p.life > 0)
-          .concat(
-            Array.from(
-              { length: particleCount - updatedParticles.filter(p => p.life > 0).length },
-              (_, i) => createParticle(Date.now() + i)
-            )
-          );
-        
-        return newParticles;
-      });
-      
-      animationFrameRef.current = requestAnimationFrame(animate);
-    };
-    
-    animate();
-    
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, [active, particleCount, normalizedIntensity]);
-  
-  // Crear una nueva partícula
+  // Crear una partícula nueva
   const createParticle = (id: number): Particle => {
-    const size = 5 + Math.random() * 15 * normalizedIntensity;
-    const maxLife = 80 + Math.random() * 120;
+    const containerWidth = width || (containerRef.current?.clientWidth || window.innerWidth);
+    const containerHeight = height || (containerRef.current?.clientHeight || window.innerHeight);
+    
+    // Posición inicial - cerca del fondo
+    const x = Math.random() * containerWidth;
+    const y = containerHeight - Math.random() * 50;
+    
+    // Tamaño aleatorio basado en la intensidad
+    const size = Math.random() * (2 + intensity/2) + 2;
+    
+    // Velocidad
+    const speedY = -(Math.random() * intensity + 1);
+    
+    // Vida de la partícula
+    const maxLife = 1000 + Math.random() * 2000 * (intensity / 5);
     
     return {
       id,
-      x: Math.random() * width,
-      y: height + size,
+      x,
+      y,
       size,
-      speedY: 0.5 + Math.random() * 2 * normalizedIntensity,
-      opacity: Math.random() * normalizedIntensity,
-      life: maxLife,
+      speedY,
+      opacity: Math.random() * 0.5 + 0.3,
+      life: 0,
       maxLife,
     };
   };
   
+  // Inicializar partículas
+  useEffect(() => {
+    if (!active) {
+      setParticles([]);
+      return;
+    }
+    
+    const initialParticles: Particle[] = [];
+    for (let i = 0; i < particleCount; i++) {
+      initialParticles.push(createParticle(i));
+    }
+    setParticles(initialParticles);
+    
+    return () => {
+      if (requestRef.current !== null) {
+        cancelAnimationFrame(requestRef.current);
+      }
+    };
+  }, [active, particleCount]);
+  
+  // Animación de partículas
+  useEffect(() => {
+    if (!active || particles.length === 0) return;
+    
+    let animationFrameId: number;
+    let lastAddedParticleTime = Date.now();
+    
+    const animate = () => {
+      const now = Date.now();
+      
+      // Añadir nuevas partículas para mantener el conteo estable
+      const currentTime = now;
+      if (currentTime - lastAddedParticleTime > 100) {
+        setParticles(prevParticles => {
+          const newParticles = [...prevParticles];
+          
+          // Encontrar partículas que hayan completado su ciclo de vida
+          const deadParticles = newParticles.filter(p => p.life >= p.maxLife);
+          
+          // Reemplazar partículas muertas
+          deadParticles.forEach(deadParticle => {
+            const index = newParticles.findIndex(p => p.id === deadParticle.id);
+            if (index !== -1) {
+              newParticles[index] = createParticle(deadParticle.id);
+            }
+          });
+          
+          return newParticles;
+        });
+        lastAddedParticleTime = currentTime;
+      }
+      
+      // Actualizar posición de partículas
+      setParticles(prevParticles => {
+        return prevParticles.map(particle => {
+          // Mover hacia arriba
+          const y = particle.y + particle.speedY;
+          
+          // Añadir pequeño movimiento horizontal
+          const x = particle.x + (Math.random() - 0.5) * 0.5;
+          
+          // Incrementar tiempo de vida
+          const life = particle.life + 16.67; // Aproximadamente en milisegundos para 60fps
+          
+          // Calcular opacidad en función del ciclo de vida
+          const opacityMultiplier = 1 - life / particle.maxLife;
+          const opacity = particle.opacity * opacityMultiplier;
+          
+          return {
+            ...particle,
+            x,
+            y,
+            life,
+            opacity
+          };
+        });
+      });
+      
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    animationFrameId = requestAnimationFrame(animate);
+    requestRef.current = animationFrameId;
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      requestRef.current = null;
+    };
+  }, [active, particles]);
+  
   if (!active) return null;
   
   return (
-    <div className={`absolute overflow-hidden pointer-events-none z-0 ${className}`}>
-      <canvas
-        ref={canvasRef}
-        width={width}
-        height={height}
-        className="opacity-70"
-      />
+    <div ref={containerRef} className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
+      {particles.map(particle => (
+        <div
+          key={particle.id}
+          className="fire-particle"
+          style={{
+            left: `${particle.x}px`,
+            top: `${particle.y}px`,
+            width: `${particle.size * 2}px`,
+            height: `${particle.size * 2}px`,
+            opacity: particle.opacity,
+          }}
+        />
+      ))}
     </div>
   );
 }

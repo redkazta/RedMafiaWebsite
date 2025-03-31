@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface BloodCornerProps {
   className?: string;
@@ -12,95 +12,110 @@ export default function BloodCorner({
   className = '',
   position = 'top-left',
   size = 100,
-  opacity = 0.6,
-  animate = true,
+  opacity = 0.7,
+  animate = true
 }: BloodCornerProps) {
-  // Determinar la posición CSS y transformación
-  const positionStyles = useMemo(() => {
+  const [drips, setDrips] = useState<{ id: number; height: number; delay: number; position: number }[]>([]);
+  const cornerRef = useRef<HTMLDivElement>(null);
+  
+  // Generar drips aleatorios
+  useEffect(() => {
+    if (!animate) return;
+    
+    const numDrips = Math.floor(size / 15);
+    const newDrips = [];
+    
+    for (let i = 0; i < numDrips; i++) {
+      newDrips.push({
+        id: i,
+        height: Math.random() * (size / 2) + (size / 4),
+        delay: Math.random() * 3,
+        position: Math.random() * size
+      });
+    }
+    
+    setDrips(newDrips);
+  }, [size, animate]);
+  
+  // Seleccionar la rotación según la posición
+  const getRotation = () => {
     switch (position) {
-      case 'top-left':
-        return { top: 0, left: 0, transform: 'rotate(0deg)' };
-      case 'top-right':
-        return { top: 0, right: 0, transform: 'rotate(90deg)' };
-      case 'bottom-left':
-        return { bottom: 0, left: 0, transform: 'rotate(270deg)' };
-      case 'bottom-right':
-        return { bottom: 0, right: 0, transform: 'rotate(180deg)' };
+      case 'top-right': return 'rotate(90deg)';
+      case 'bottom-right': return 'rotate(180deg)';
+      case 'bottom-left': return 'rotate(270deg)';
+      default: return 'rotate(0deg)';
     }
-  }, [position]);
-
-  // Generar paths SVG aleatorios para el efecto de sangre
-  const bloodPaths = useMemo(() => {
-    const paths = [];
-    const baseSize = size * 0.8;
-    
-    // Crear 3-5 trazos de sangre
-    const pathCount = 3 + Math.floor(Math.random() * 3);
-    
-    for (let i = 0; i < pathCount; i++) {
-      const drip = 30 + Math.random() * 70; // Longitud de la gota
-      const width = 15 + Math.random() * 30; // Ancho de la gota
-      const xOffset = 10 + Math.random() * (baseSize - 20); // Posición X
-      
-      paths.push(
-        <path 
-          key={i}
-          d={`M ${xOffset} 0 
-              C ${xOffset - width/3} ${drip/3}, ${xOffset + width/3} ${drip/2}, ${xOffset} ${drip}
-              C ${xOffset - width/4} ${drip*0.8}, ${xOffset + width/4} ${drip*0.8}, ${xOffset - width/2} ${drip*0.6}`}
-          fill="none"
-          stroke="#950101"
-          strokeWidth={3 + Math.random() * 3}
-          opacity={0.4 + Math.random() * 0.6}
-          style={{
-            filter: 'drop-shadow(0 0 2px rgba(255,0,0,0.5))',
-            animation: animate ? `blood-drip ${2 + Math.random() * 3}s ${Math.random() * 2}s infinite` : 'none',
-            animationTimingFunction: 'ease-in-out'
-          }}
-        />
-      );
+  };
+  
+  // Seleccionar la posición CSS
+  const getPosition = () => {
+    switch (position) {
+      case 'top-right': return 'top-0 right-0';
+      case 'bottom-right': return 'bottom-0 right-0';
+      case 'bottom-left': return 'bottom-0 left-0';
+      default: return 'top-0 left-0';
     }
-    
-    // Mancha principal
-    paths.push(
-      <ellipse
-        key="stain"
-        cx={baseSize / 2}
-        cy={20}
-        rx={baseSize / 2 - 10}
-        ry={30}
-        fill="#950101"
-        opacity={opacity * 0.8}
-        style={{
-          filter: 'drop-shadow(0 0 3px rgba(255,0,0,0.4))'
-        }}
-      />
-    );
-    
-    return paths;
-  }, [size, opacity, animate]);
-
+  };
+  
+  // Estilos para el contenedor principal
+  const containerStyle = {
+    position: 'absolute',
+    width: `${size}px`,
+    height: `${size}px`,
+    pointerEvents: 'none',
+    zIndex: 0,
+    transform: getRotation(),
+    opacity: opacity
+  } as React.CSSProperties;
+  
   return (
     <div 
-      className={`absolute z-0 overflow-visible pointer-events-none ${className}`}
-      style={{
-        ...positionStyles,
-        width: size,
-        height: size,
-      }}
+      ref={cornerRef}
+      className={`${getPosition()} ${className}`}
+      style={containerStyle}
     >
-      <svg
-        width={size}
-        height={size}
-        viewBox={`0 0 ${size} ${size}`}
+      {/* Forma principal de la esquina */}
+      <div 
+        className="absolute top-0 left-0"
         style={{
-          position: 'absolute',
-          filter: 'blur(0.5px)',
-          ...positionStyles,
+          width: '100%',
+          height: '100%',
+          background: `radial-gradient(circle at top left, rgba(255, 0, 0, ${opacity}), transparent ${size}%)`,
+          filter: 'blur(5px)'
         }}
-      >
-        {bloodPaths}
-      </svg>
+      ></div>
+      
+      {/* Triángulo en la esquina */}
+      <div 
+        className="absolute top-0 left-0"
+        style={{
+          width: 0,
+          height: 0,
+          borderStyle: 'solid',
+          borderWidth: `${size / 2}px ${size / 2}px 0 0`,
+          borderColor: `rgba(255, 0, 0, ${opacity * 0.5}) transparent transparent transparent`,
+          filter: 'blur(3px)'
+        }}
+      ></div>
+      
+      {/* Gotas de sangre */}
+      {animate && drips.map(drip => (
+        <div 
+          key={drip.id}
+          className="absolute bg-[#950101] rounded-b-full animate-drip"
+          style={{
+            left: `${drip.position}px`,
+            top: 0,
+            width: `${2 + Math.random() * 3}px`,
+            height: `${drip.height}px`,
+            animationDelay: `${drip.delay}s`,
+            animationDuration: `${3 + Math.random() * 5}s`,
+            opacity: 0.6 + Math.random() * 0.4,
+            transformOrigin: 'top center',
+            filter: 'blur(1px)'
+          }}
+        ></div>
+      ))}
     </div>
   );
 }
