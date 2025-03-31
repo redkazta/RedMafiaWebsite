@@ -38,12 +38,17 @@ export default function Home() {
         
         <div className="container mx-auto px-4 relative z-20">
           <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-6xl font-['Bebas_Neue',sans-serif] text-[#FF0000] mb-4">
+            <h1 className="text-5xl md:text-7xl red-mafia-title mb-4 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
               RED MAFIA
             </h1>
-            <p className="text-xl md:text-2xl text-[#F5F5F5] mb-8">
-              Rockea con nosotros en nuestra gira "SANGRE Y FUEGO" 2023
-            </p>
+            <div className="border-l-4 border-[#FF0000] pl-4 mb-8">
+              <p className="text-xl md:text-2xl text-[#F5F5F5] font-semibold">
+                RITMO SALVAJE, LETRAS DE LA CALLE
+              </p>
+              <p className="text-lg md:text-xl text-[#F5F5F5]/80 italic">
+                Del barrio para el mundo | Guadalajara, México
+              </p>
+            </div>
             <div className="flex flex-wrap gap-4">
               <Link href="/lanzamientos" className="bg-[#950101] hover:bg-[#FF0000] transition-colors px-6 py-3 rounded-md text-[#F5F5F5] inline-flex items-center font-medium">
                 <Music size={18} className="mr-2" />
@@ -62,7 +67,7 @@ export default function Home() {
       <section className="py-16 bg-[#121212]">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-10">
-            <h2 className="text-3xl font-['Bebas_Neue',sans-serif] text-[#FF0000]">
+            <h2 className="text-3xl red-mafia-title">
               ÚLTIMO LANZAMIENTO
             </h2>
             <Link href="/lanzamientos" className="text-[#F5F5F5] hover:text-[#FF0000] transition-colors inline-flex items-center">
@@ -111,7 +116,7 @@ export default function Home() {
       <section className="py-16 bg-[#0A0A0A]">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-10">
-            <h2 className="text-3xl font-['Bebas_Neue',sans-serif] text-[#FF0000]">
+            <h2 className="text-3xl red-mafia-title">
               PRÓXIMAS PRESENTACIONES
             </h2>
             <Link href="/conciertos" className="text-[#F5F5F5] hover:text-[#FF0000] transition-colors inline-flex items-center">
@@ -153,7 +158,7 @@ export default function Home() {
       <section className="py-16 bg-[#121212]">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-10">
-            <h2 className="text-3xl font-['Bebas_Neue',sans-serif] text-[#FF0000]">
+            <h2 className="text-3xl red-mafia-title">
               ÚLTIMAS NOTICIAS
             </h2>
             <Link href="/noticias" className="text-[#F5F5F5] hover:text-[#FF0000] transition-colors inline-flex items-center">
@@ -192,7 +197,7 @@ export default function Home() {
       <section className="py-16 bg-[#0A0A0A]">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-10">
-            <h2 className="text-3xl font-['Bebas_Neue',sans-serif] text-[#FF0000]">
+            <h2 className="text-3xl red-mafia-title">
               GALERÍA
             </h2>
             <Link href="/galeria" className="text-[#F5F5F5] hover:text-[#FF0000] transition-colors inline-flex items-center">
@@ -220,19 +225,28 @@ export default function Home() {
       {/* Call to Action */}
       <section className="py-24 bg-[#FF0000] relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1485579149621-3123dd979885?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center opacity-20"></div>
+        
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-24 h-24 bg-black opacity-20 transform -rotate-45"></div>
+        <div className="absolute bottom-0 right-0 w-32 h-32 bg-black opacity-20 transform rotate-45"></div>
+        
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
             ¿QUIERES CONTACTARNOS?
           </h2>
-          <p className="text-white/80 text-lg max-w-2xl mx-auto mb-8">
-            Para contrataciones, colaboraciones o simplemente para compartir tu experiencia con nuestra música.
-          </p>
-          <Link 
-            href="/contacto" 
-            className="bg-white hover:bg-[#F5F5F5] transition-colors px-8 py-4 rounded-md text-[#FF0000] inline-flex items-center font-bold text-lg"
-          >
-            Contáctanos Ahora
-          </Link>
+          <div className="max-w-2xl mx-auto border-b-2 border-[#ffffff50] pb-6 mb-6">
+            <p className="text-white/90 text-lg mx-auto">
+              Para contrataciones, colaboraciones o simplemente para compartir tu experiencia con nuestra música.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <Link 
+              href="/contacto" 
+              className="bg-white hover:bg-[#F5F5F5] transition-colors px-8 py-4 rounded-md text-[#FF0000] inline-flex items-center font-bold text-lg shadow-[0_4px_10px_rgba(0,0,0,0.3)] hover:shadow-[0_6px_15px_rgba(0,0,0,0.4)] transform hover:-translate-y-1 transition-all duration-300"
+            >
+              Contáctanos Ahora
+            </Link>
+          </div>
         </div>
       </section>
       

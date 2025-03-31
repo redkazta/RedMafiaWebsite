@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,5 +11,22 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+  }
+  
+  .red-mafia-title {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #FF0000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .red-mafia-glow {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .red-mafia-glow:hover {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
   }
 }

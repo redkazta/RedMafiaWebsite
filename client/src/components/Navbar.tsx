@@ -13,15 +13,19 @@ export default function Navbar() {
     <header className="bg-[#1E1E1E] border-b border-[#950101]">
       <nav className="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center mb-4 md:mb-0">
-          <div className="w-12 h-12 bg-[#FF0000] flex items-center justify-center rounded">
-            <span className="font-['Bebas_Neue',cursive] text-2xl text-[#F5F5F5]">RM</span>
+        <Link href="/" className="flex items-center mb-4 md:mb-0 group">
+          <div className="h-16 w-auto overflow-hidden">
+            <img 
+              src="/red-mafia-logo.png" 
+              alt="Red Mafia" 
+              className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105" 
+            />
           </div>
           <div className="ml-3">
-            <h1 className="font-['Bebas_Neue',cursive] text-3xl text-[#FF0000] tracking-wider">RED MAFIA</h1>
-            <p className="text-xs text-[#F5F5F5]/70">BANDA OFICIAL</p>
+            <h1 className="font-['Bebas_Neue',cursive] text-3xl text-[#FF0000] tracking-wider group-hover:text-white transition-colors duration-300">RED MAFIA</h1>
+            <p className="text-xs text-[#F5F5F5]/70 italic">Del barrio para el mundo | Guadalajara, MX</p>
           </div>
-        </div>
+        </Link>
         
         {/* Menú de navegación para móvil */}
         <div className="md:hidden w-full mb-3">
