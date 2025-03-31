@@ -3,8 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { Release, News, Concert, GalleryItem } from "@shared/schema";
 import { ChevronRight, Calendar, MapPin, Music, Camera, Newspaper, Mail, Info, Play, Disc, Flame } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 // Componentes animados
 import { FireParticles, Equalizer, NeonLine, BloodCorner } from "@/components/animated";
