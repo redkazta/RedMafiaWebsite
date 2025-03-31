@@ -23,42 +23,29 @@ interface FireParticlesProps {
 export default function FireParticles({
   className = '',
   particleCount = 50,
-  active = false,
+  active = true,
   intensity = 5,
-  width,
-  height
+  width = 300,
+  height = 200
 }: FireParticlesProps) {
   const [particles, setParticles] = useState<Particle[]>([]);
   const requestRef = useRef<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   
-  // Crear una partícula nueva
+  // Crear una nueva partícula
   const createParticle = (id: number): Particle => {
-    const containerWidth = width || (containerRef.current?.clientWidth || window.innerWidth);
-    const containerHeight = height || (containerRef.current?.clientHeight || window.innerHeight);
-    
-    // Posición inicial - cerca del fondo
-    const x = Math.random() * containerWidth;
-    const y = containerHeight - Math.random() * 50;
-    
-    // Tamaño aleatorio basado en la intensidad
-    const size = Math.random() * (2 + intensity/2) + 2;
-    
-    // Velocidad
-    const speedY = -(Math.random() * intensity + 1);
-    
-    // Vida de la partícula
-    const maxLife = 1000 + Math.random() * 2000 * (intensity / 5);
+    const particleIntensity = intensity / 10; // Normalizar a 0-1
     
     return {
       id,
-      x,
-      y,
-      size,
-      speedY,
-      opacity: Math.random() * 0.5 + 0.3,
+      x: Math.random() * width,
+      y: height + Math.random() * 20,
+      size: 2 + Math.random() * 3 * particleIntensity,
+      speedY: 1 + Math.random() * 3 * particleIntensity,
+      opacity: 0.4 + Math.random() * 0.6,
       life: 0,
-      maxLife,
+      maxLife: 100 + Math.random() * 50
     };
   };
   
@@ -69,106 +56,101 @@ export default function FireParticles({
       return;
     }
     
+    // Crear partículas iniciales
     const initialParticles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       initialParticles.push(createParticle(i));
     }
+    
     setParticles(initialParticles);
     
-    return () => {
-      if (requestRef.current !== null) {
-        cancelAnimationFrame(requestRef.current);
-      }
-    };
-  }, [active, particleCount]);
+    // Inicializar el canvas
+    if (canvasRef.current) {
+      contextRef.current = canvasRef.current.getContext('2d');
+    }
+  }, [active, particleCount, width, height, intensity]);
   
-  // Animación de partículas
+  // Animar partículas
   useEffect(() => {
-    if (!active || particles.length === 0) return;
-    
-    let animationFrameId: number;
-    let lastAddedParticleTime = Date.now();
+    if (!active || !contextRef.current) return;
     
     const animate = () => {
-      const now = Date.now();
+      if (!contextRef.current || !canvasRef.current) return;
       
-      // Añadir nuevas partículas para mantener el conteo estable
-      const currentTime = now;
-      if (currentTime - lastAddedParticleTime > 100) {
-        setParticles(prevParticles => {
-          const newParticles = [...prevParticles];
-          
-          // Encontrar partículas que hayan completado su ciclo de vida
-          const deadParticles = newParticles.filter(p => p.life >= p.maxLife);
-          
-          // Reemplazar partículas muertas
-          deadParticles.forEach(deadParticle => {
-            const index = newParticles.findIndex(p => p.id === deadParticle.id);
-            if (index !== -1) {
-              newParticles[index] = createParticle(deadParticle.id);
-            }
-          });
-          
-          return newParticles;
-        });
-        lastAddedParticleTime = currentTime;
-      }
+      // Limpiar canvas
+      contextRef.current.clearRect(0, 0, width, height);
       
-      // Actualizar posición de partículas
+      // Actualizar y dibujar partículas
       setParticles(prevParticles => {
         return prevParticles.map(particle => {
-          // Mover hacia arriba
-          const y = particle.y + particle.speedY;
+          // Actualizar posición y vida
+          const newY = particle.y - particle.speedY;
+          const newLife = particle.life + 1;
           
-          // Añadir pequeño movimiento horizontal
-          const x = particle.x + (Math.random() - 0.5) * 0.5;
+          // Dibujar partícula
+          if (contextRef.current) {
+            const ctx = contextRef.current;
+            const lifeRatio = newLife / particle.maxLife;
+            const opacityMultiplier = lifeRatio < 0.5 ? lifeRatio * 2 : (1 - lifeRatio) * 2;
+            
+            // Color degradado basado en intensidad y ciclo de vida
+            const r = 255;
+            const g = Math.floor(100 + (155 * (1 - lifeRatio)) * (intensity / 10));
+            const b = Math.floor(50 * (1 - lifeRatio) * (intensity / 10));
+            
+            ctx.beginPath();
+            const gradient = ctx.createRadialGradient(
+              particle.x, newY, 0,
+              particle.x, newY, particle.size
+            );
+            gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${particle.opacity * opacityMultiplier})`);
+            gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+            
+            ctx.fillStyle = gradient;
+            ctx.arc(particle.x, newY, particle.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
           
-          // Incrementar tiempo de vida
-          const life = particle.life + 16.67; // Aproximadamente en milisegundos para 60fps
+          // Regenerar partícula si llega al final de su vida útil
+          if (newLife >= particle.maxLife || newY < -particle.size) {
+            return createParticle(particle.id);
+          }
           
-          // Calcular opacidad en función del ciclo de vida
-          const opacityMultiplier = 1 - life / particle.maxLife;
-          const opacity = particle.opacity * opacityMultiplier;
-          
+          // Actualizar partícula
           return {
             ...particle,
-            x,
-            y,
-            life,
-            opacity
+            y: newY,
+            life: newLife
           };
         });
       });
       
-      animationFrameId = requestAnimationFrame(animate);
+      // Continuar la animación
+      requestRef.current = requestAnimationFrame(animate);
     };
     
-    animationFrameId = requestAnimationFrame(animate);
-    requestRef.current = animationFrameId;
+    // Iniciar animación
+    animate();
     
+    // Limpiar al desmontar
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      requestRef.current = null;
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+      }
     };
-  }, [active, particles]);
-  
-  if (!active) return null;
+  }, [active, width, height, intensity]);
   
   return (
-    <div ref={containerRef} className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
-      {particles.map(particle => (
-        <div
-          key={particle.id}
-          className="fire-particle"
-          style={{
-            left: `${particle.x}px`,
-            top: `${particle.y}px`,
-            width: `${particle.size * 2}px`,
-            height: `${particle.size * 2}px`,
-            opacity: particle.opacity,
-          }}
-        />
-      ))}
+    <div 
+      className={`absolute bottom-0 left-0 w-full ${className}`}
+      style={{ width, height }}
+    >
+      <canvas
+        ref={canvasRef}
+        width={width}
+        height={height}
+        className="w-full h-full"
+      />
     </div>
   );
 }

@@ -1,4 +1,3 @@
-// Exportación de todos los componentes animados
 export { default as BloodCorner } from './BloodCorner';
 export { default as Equalizer } from './Equalizer';
 export { default as FireParticles } from './FireParticles';
