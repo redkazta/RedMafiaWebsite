@@ -26,6 +26,8 @@ export const releases = pgTable("releases", {
   tracks: integer("tracks").notNull(),
   description: text("description").notNull(),
   coverImage: text("cover_image").notNull(),
+  audioFiles: text("audio_files").array(), // URLs de los archivos de audio
+  trackTitles: text("track_titles").array(), // Títulos de las pistas
   createdAt: timestamp("created_at").defaultNow(),
 });
 
