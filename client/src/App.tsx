@@ -11,6 +11,9 @@ import NewsDetail from "@/pages/NewsDetail";
 import Concerts from "@/pages/Concerts";
 import Gallery from "@/pages/Gallery";
 import Contact from "@/pages/Contact";
+import About from "@/pages/About";
+import Merchandise from "@/pages/Merchandise";
+import MediaKit from "@/pages/MediaKit";
 
 function Router() {
   return (
@@ -23,6 +26,9 @@ function Router() {
       <Route path="/conciertos" component={Concerts}/>
       <Route path="/galeria" component={Gallery}/>
       <Route path="/contacto" component={Contact}/>
+      <Route path="/nosotros" component={About}/>
+      <Route path="/tienda" component={Merchandise}/>
+      <Route path="/media-kit" component={MediaKit}/>
       <Route component={NotFound} />
     </Switch>
   );
