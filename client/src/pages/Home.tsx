@@ -27,30 +27,40 @@ export default function Home() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center bg-black text-white">
+      <section className="relative h-[85vh] flex items-center bg-black text-white overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center z-0 opacity-50"
+          className="absolute inset-0 bg-cover bg-center z-0 opacity-40"
           style={{ 
             backgroundImage: "url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')" 
           }}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-black/70 z-5"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10"></div>
+        
+        {/* Elementos decorativos para añadir estilo */}
+        <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-black to-transparent z-10"></div>
+        <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#FF0000]/10 rounded-full filter blur-3xl z-5"></div>
+        <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-[#FF0000]/5 rounded-full filter blur-3xl z-5"></div>
+        
+        {/* Efecto de líneas rojas */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#FF0000] to-transparent z-10"></div>
+        <div className="absolute bottom-0 right-0 w-1/2 h-1 bg-gradient-to-l from-[#FF0000] to-transparent z-10"></div>
         
         <div className="container mx-auto px-4 relative z-20">
           <div className="max-w-2xl">
             <h1 className="text-5xl md:text-7xl red-mafia-title mb-4 drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)]">
               RED MAFIA
             </h1>
-            <div className="border-l-4 border-[#FF0000] pl-4 mb-8">
-              <p className="text-xl md:text-2xl text-[#F5F5F5] font-semibold">
-                RITMO SALVAJE, LETRAS DE LA CALLE
+            <div className="border-l-4 border-[#FF0000] pl-4 mb-8 bg-black/30 p-4 backdrop-blur-sm rounded-r-md red-mafia-glow">
+              <p className="text-xl md:text-2xl text-[#F5F5F5] font-bold uppercase">
+                HACIENDO ALGO NUEVO WEY, ALGO BIEN
               </p>
               <p className="text-lg md:text-xl text-[#F5F5F5]/80 italic">
-                Del barrio para el mundo | Guadalajara, México
+                Guadalajara, México | La nueva evolución
               </p>
             </div>
             <div className="flex flex-wrap gap-4">
-              <Link href="/lanzamientos" className="bg-[#950101] hover:bg-[#FF0000] transition-colors px-6 py-3 rounded-md text-[#F5F5F5] inline-flex items-center font-medium">
+              <Link href="/lanzamientos" className="bg-[#950101] hover:bg-[#FF0000] transition-colors px-6 py-3 rounded-md text-[#F5F5F5] inline-flex items-center font-medium red-mafia-glow">
                 <Music size={18} className="mr-2" />
                 Nuestra Música
               </Link>
@@ -101,7 +111,7 @@ export default function Home() {
                 
                 <Link 
                   href={`/lanzamientos/${releases[0].id}`} 
-                  className="bg-[#950101] hover:bg-[#FF0000] transition-colors px-6 py-3 rounded-md text-[#F5F5F5] inline-flex items-center font-medium"
+                  className="bg-[#950101] hover:bg-[#FF0000] transition-colors px-6 py-3 rounded-md text-[#F5F5F5] inline-flex items-center font-medium red-mafia-glow"
                 >
                   <Music size={18} className="mr-2" />
                   Escuchar Ahora

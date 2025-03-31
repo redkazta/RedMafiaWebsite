@@ -7,10 +7,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center mb-6">
-              <div className="w-10 h-10 bg-[#FF0000] flex items-center justify-center rounded">
-                <span className="font-['Bebas_Neue',cursive] text-xl text-[#F5F5F5]">RM</span>
+              <div className="h-14 w-auto overflow-hidden red-mafia-glow bg-[#ff0000]/10 p-1 rounded-md border border-[#ff0000]/20 shadow-lg">
+                <img 
+                  src="/red-mafia-logo.png" 
+                  alt="Red Mafia" 
+                  className="h-full w-auto object-contain drop-shadow-[0_0_5px_rgba(255,0,0,0.5)]" 
+                />
               </div>
-              <h4 className="ml-3 font-['Bebas_Neue',cursive] text-2xl text-[#FF0000]">RED MAFIA</h4>
+              <div className="ml-3">
+                <h4 className="red-mafia-title text-2xl">RED MAFIA</h4>
+                <p className="text-xs text-[#F5F5F5]/70 uppercase">Haciendo algo nuevo wey, algo bien</p>
+              </div>
             </div>
             <p className="text-[#F5F5F5]/70 text-sm mb-6">
               RED MAFIA es una banda de rock alternativo formada en 2015. Con su estilo único y letras profundas, ha conquistado a miles de fanáticos en todo México.
@@ -21,7 +28,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="font-['Bebas_Neue',cursive] text-xl text-[#F5F5F5] mb-6">ENLACES RÁPIDOS</h4>
+            <h4 className="red-mafia-title text-xl mb-6">ENLACES RÁPIDOS</h4>
             <ul className="space-y-3">
               <li><Link href="/" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Inicio</Link></li>
               <li><Link href="/lanzamientos" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Música</Link></li>
@@ -33,7 +40,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="font-['Bebas_Neue',cursive] text-xl text-[#F5F5F5] mb-6">TIENDA OFICIAL</h4>
+            <h4 className="red-mafia-title text-xl mb-6">TIENDA OFICIAL</h4>
             <ul className="space-y-3">
               <li><a href="#" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Música</a></li>
               <li><a href="#" className="text-[#F5F5F5]/70 hover:text-[#FF0000] transition-colors">Merchandising</a></li>
@@ -43,7 +50,7 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="font-['Bebas_Neue',cursive] text-xl text-[#F5F5F5] mb-6">NEWSLETTER</h4>
+            <h4 className="red-mafia-title text-xl mb-6">NEWSLETTER</h4>
             <p className="text-[#F5F5F5]/70 text-sm mb-4">
               Suscríbete para recibir noticias exclusivas, fechas de conciertos y contenido especial.
             </p>
