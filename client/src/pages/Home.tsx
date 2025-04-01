@@ -244,11 +244,15 @@ export default function Home() {
 
             <div className="mt-4 md:mt-0">
               <div className="w-full max-w-4xl mx-auto mt-8">
-                <SpotifyPlayer
-                  trackId="2TQdYJgxFFeJ0LaCKGqAkg"
-                  height={80}
-                  className="mb-4"
-                />
+                {songs.map((song) => (
+                  <div key={song.spotifyId} className="mb-4">
+                    <SpotifyPlayer
+                      trackId={song.spotifyId}
+                      height={80}
+                      className="mb-4"
+                    />
+                  </div>
+                ))}
                 <div className="grid gap-4">
                   {[
                     { 
@@ -260,20 +264,20 @@ export default function Home() {
                     { 
                       title: "Puño de Hierro", 
                       artist: "Red Mafia", 
-                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
-                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                      cover: "https://i.scdn.co/image/ab67616d00001e02ff3c24a872caeb2ed49d43d8",
+                      spotifyId: "5LYJ631w9ps5h9tdvac7yP"
                     },
                     { 
                       title: "Noches Sangrientas", 
                       artist: "Red Mafia", 
-                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
-                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                      cover: "https://i.scdn.co/image/ab67616d00001e02c450c89d3eb750d3535b0a0c",
+                      spotifyId: "1tBLwe6Ds1zRaEAOA0Rs8L"
                     },
                     { 
                       title: "Fuego en las Calles", 
                       artist: "Red Mafia", 
-                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
-                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                      cover: "https://i.scdn.co/image/ab67616d00001e023af7c1d71442ff9d4f88a66b",
+                      spotifyId: "2TQdYJgxFFeJ0LaCKGqAkg"
                     },
                     { 
                       title: "Noche Eterna", 
@@ -284,14 +288,14 @@ export default function Home() {
                     { 
                       title: "Origen", 
                       artist: "Red Mafia", 
-                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
-                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                      cover: "https://i.scdn.co/image/ab67616d00001e02b1c42b76dc1fd933bb8f25e8",
+                      spotifyId: "7LtXc6yJxGwqaYoiPK6HFS"
                     },
                     { 
                       title: "Primera Sangre", 
                       artist: "Red Mafia", 
-                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
-                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                      cover: "https://i.scdn.co/image/ab67616d00001e02a3ef343c0d1f2c66a5ed8796",
+                      spotifyId: "4qM6QoCL5H3J6Qx6VBdDKy"
                     }
                   ].map((song, index) => (
                     <div key={index} 
