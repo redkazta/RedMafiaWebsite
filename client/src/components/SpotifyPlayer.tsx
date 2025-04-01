@@ -29,6 +29,17 @@ export default function SpotifyPlayer({
 
   // Use the official Spotify embed format
   const embedUrl = `https://open.spotify.com/embed/${contentType}/${contentId}`;
+
+  // Emit event for player synchronization
+  const handleLoad = () => {
+    window.dispatchEvent(new CustomEvent('spotifyPlayerChange', { 
+      detail: { 
+        contentId,
+        contentType,
+        isPlaying: true 
+      } 
+    }));
+  };
   
   return (
     <iframe
@@ -39,6 +50,7 @@ export default function SpotifyPlayer({
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       loading="lazy"
       className={className}
+      onLoad={handleLoad}
     />
   );
 }

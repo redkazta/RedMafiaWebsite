@@ -55,6 +55,14 @@ export default function Home() {
       <main>
         <div className="container mx-auto px-4">
           <section className="py-12">
+            <div className="mb-12 text-center">
+              <h1 className="text-4xl font-bold text-red-600 mb-4">RED MAFIA</h1>
+              <p className="text-white/80 text-lg max-w-2xl mx-auto">
+                Grupo de trap originario de Guadalajara, creando música única desde su estudio Red House. 
+                Fusionando ritmos urbanos con letras auténticas que representan la nueva era del trap mexicano.
+              </p>
+            </div>
+
             <h2 className="text-3xl font-bold text-red-600 mb-8">Últimos Lanzamientos</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -63,7 +71,7 @@ export default function Home() {
                 <SpotifyPlayer 
                   albumId="0LgauOCJwpPugwBRZhumCj"
                   className="w-full"
-                  height={380}
+                  height={300}
                 />
               </div>
 
