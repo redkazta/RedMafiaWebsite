@@ -59,13 +59,13 @@ export default function SpotifyPlayer({
   return (
     <div className={`spotify-player-container ${className}`}>
       <iframe 
-        src={url} 
+        src={`${url}${mini ? '?view=minimal' : ''}`}
         width={typeof width === 'number' ? width : '100%'} 
         height={typeof height === 'number' ? height : 352} 
         frameBorder="0" 
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
         loading="lazy"
-        className="rounded-lg"
+        className={`rounded-lg ${mini ? 'mini-player' : ''}`}
       ></iframe>
     </div>
   );

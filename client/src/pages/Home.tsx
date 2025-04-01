@@ -124,17 +124,15 @@ export default function Home() {
       <ContactSection />
       
       {/* Floating Player */}
-      <FloatingPlayer
-        track={{
-          title: "ALV Las Fresas",
-          artist: "RED MAFIA",
-          audioSrc: "https://p.scdn.co/mp3-preview/7aa1e58d1b2fbb031db3ca2c3dd2a2b8eb60f7c1",
-          coverImage: "https://i.scdn.co/image/ab67616d0000b273d8601e7e6ede248c1bf8c662",
-          guadalajaraReference: "Último Single"
-        }}
-        autoPlay={true}
-        className="z-50"
-      />
+      <div className="fixed bottom-4 left-4 z-50">
+        <SpotifyPlayer
+          albumId="0LgauOCJwpPugwBRZhumCj"
+          width={300}
+          height={80}
+          className="rounded-lg shadow-xl"
+          mini={true}
+        />
+      </div>
     </div>
   );
 }
