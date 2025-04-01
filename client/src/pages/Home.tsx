@@ -131,6 +131,7 @@ export default function Home() {
           {releases && releases.length > 0 && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative">
               {/* Album art with animated glow effect */}
+              <Link href={`/lanzamientos/${releases[0].id}`}> {/* Added Link here */}
               <div className="relative group p-4">
                 <div className="absolute inset-0 bg-gradient-to-r from-[#FF0000]/0 via-[#FF0000]/10 to-[#FF0000]/0 animate-pulse"></div>
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF0000]/10 -z-10 blur-3xl rounded-full animate-pulse"></div>
@@ -160,7 +161,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
               <div className="space-y-8">
                 <div>
                   <div className="flex items-center gap-2 text-[#F5F5F5]/50 text-sm mb-2">
@@ -215,6 +215,7 @@ export default function Home() {
                   ))}
                 </div>
               </div>
+              </Link> {/* Closed Link here */}
             </div>
           )}
         </div>
