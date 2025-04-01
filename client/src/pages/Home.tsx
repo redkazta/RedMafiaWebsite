@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import HeroSection from "@/components/HeroSection";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { usePlayerStore } from "@/store/player";
 import ReleasesSection from "@/components/ReleasesSection";
 import NewsSection from "@/components/NewsSection";
@@ -71,8 +72,42 @@ export default function Home() {
                 <SpotifyPlayer 
                   albumId="0LgauOCJwpPugwBRZhumCj"
                   className="w-full"
-                  height={300}
+                  height={280}
                 />
+                
+                <div className="mt-6">
+                  <h4 className="text-white text-lg mb-3">Canciones Destacadas</h4>
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      <CarouselItem className="basis-1/3">
+                        <SpotifyPlayer 
+                          trackId="0LgauOCJwpPugwBRZhumCj"
+                          className="w-full"
+                          height={100}
+                          view="compact"
+                        />
+                      </CarouselItem>
+                      <CarouselItem className="basis-1/3">
+                        <SpotifyPlayer 
+                          trackId="3ojUCBn2gpPULJ9U6FjQIB"
+                          className="w-full"
+                          height={100}
+                          view="compact"
+                        />
+                      </CarouselItem>
+                      <CarouselItem className="basis-1/3">
+                        <SpotifyPlayer 
+                          trackId="0LgauOCJwpPugwBRZhumCj"
+                          className="w-full"
+                          height={100}
+                          view="compact"
+                        />
+                      </CarouselItem>
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
+                </div>
               </div>
 
               <div className="space-y-6">
