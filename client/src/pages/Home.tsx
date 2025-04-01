@@ -69,18 +69,20 @@ export default function Home() {
             <div>
               <h3 className="text-white text-xl mb-4">Playlist Oficial</h3>
               <SpotifyPlayer 
-                playlistId="3ojUCBn2gpPULJ9U6FjQIB"
+                trackId="0LgauOCJwpPugwBRZhumCj"
                 className="w-full"
                 height={180}
+                view="compact"
               />
             </div>
 
             <div>
               <h3 className="text-white text-xl mb-4">Red Mafia Hits</h3>
               <SpotifyPlayer 
-                playlistId="3ojUCBn2gpPULJ9U6FjQIB"
+                trackId="0LgauOCJwpPugwBRZhumCj"
                 className="w-full"
                 height={180}
+                view="compact"
               />
             </div>
           </div>
@@ -92,33 +94,30 @@ export default function Home() {
       ) : releases ? (
         <ReleasesSection releases={releases} />
       ) : null}
-      
+
       {newsLoading ? (
         <div>Cargando noticias...</div>
       ) : news ? (
         <NewsSection news={news} />
       ) : null}
-      
+
       {concertsLoading ? (
         <div>Cargando conciertos...</div>
       ) : concerts ? (
         <ConcertsSection concerts={concerts} />
       ) : null}
-      
+
       {gallery && <GallerySection gallery={gallery} />}
       <ContactSection />
-      
-      {/* Spotify Mini Player */}
+
+      {/* Mini Player */}
       <div className="fixed bottom-4 left-4 z-50">
-        <iframe 
-          src="https://open.spotify.com/embed/track/0LgauOCJwpPugwBRZhumCj?utm_source=generator&theme=0" 
-          width="300" 
-          height="80" 
-          frameBorder="0" 
-          allowFullScreen 
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-          loading="lazy"
+        <SpotifyPlayer 
+          trackId="0LgauOCJwpPugwBRZhumCj"
+          width={300}
+          height={80}
           className="rounded-lg shadow-xl bg-black/90"
+          view="minimal"
         />
       </div>
     </div>
