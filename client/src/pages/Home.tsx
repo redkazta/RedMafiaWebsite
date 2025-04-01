@@ -258,14 +258,38 @@ export default function Home() {
                       spotifyId: "2TQdYJgxFFeJ0LaCKGqAkg"
                     },
                     { 
-                      title: "CHANTE 2", 
-                      artist: "Red Lean", 
-                      cover: "https://i.scdn.co/image/ab67616d00001e023af7c1d71442ff9d4f88a66b",
-                      spotifyId: "5LYJ631w9ps5h9tdvac7yP"
+                      title: "Puño de Hierro", 
+                      artist: "Red Mafia", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
+                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
                     },
                     { 
-                      title: "Sangre", 
-                      artist: "Gargut", 
+                      title: "Noches Sangrientas", 
+                      artist: "Red Mafia", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
+                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                    },
+                    { 
+                      title: "Fuego en las Calles", 
+                      artist: "Red Mafia", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
+                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                    },
+                    { 
+                      title: "Noche Eterna", 
+                      artist: "Red Mafia", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
+                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                    },
+                    { 
+                      title: "Origen", 
+                      artist: "Red Mafia", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
+                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                    },
+                    { 
+                      title: "Primera Sangre", 
+                      artist: "Red Mafia", 
                       cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
                       spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
                     }
