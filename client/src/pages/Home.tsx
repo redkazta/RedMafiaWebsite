@@ -277,14 +277,13 @@ export default function Home() {
                     }
                   ].map((song, index) => (
                     <div key={index} 
-                      className="bg-[#950101]/10 p-4 rounded-lg border border-[#950101]/30 hover:border-[#950101] transition-all group relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#950101]/0 via-[#950101]/5 to-[#950101]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                      className="bg-[#950101]/10 p-4 rounded-lg flex justify-between items-center hover:bg-[#950101]/20 transition-all duration-300 cursor-pointer group">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 overflow-hidden rounded-lg">
-                          <img src={song.cover} alt={song.title} className="w-full h-full object-cover" />
+                        <div className="w-16 h-16 overflow-hidden rounded-lg shadow-lg">
+                          <img src={song.cover} alt={song.title} className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" />
                         </div>
                         <div>
-                          <h3 className="text-white font-bold">{song.title}</h3>
+                          <h3 className="text-white font-bold text-lg group-hover:text-[#FF0000] transition-colors">{song.title}</h3>
                           <p className="text-[#F5F5F5]/70 text-sm">{song.artist}</p>
                         </div>
                       </div>
