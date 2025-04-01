@@ -33,6 +33,30 @@ export default function FloatingPlayer({
       window.removeEventListener('trackChange', handleTrackChange as EventListener);
     };
   }, []);
+  // Track change handler
+  useEffect(() => {
+    const handleTrackChange = (e: CustomEvent) => {
+      if (e.detail) {
+        const { title, artist, audioSrc, coverImage, guadalajaraReference, isPlaying } = e.detail;
+        setIsPlaying(isPlaying);
+        if (title && audioSrc) {
+          track = {
+            title,
+            artist,
+            audioSrc,
+            coverImage,
+            guadalajaraReference
+          };
+        }
+      }
+    };
+
+    window.addEventListener('trackChange', handleTrackChange as EventListener);
+    return () => {
+      window.removeEventListener('trackChange', handleTrackChange as EventListener);
+    };
+  }, []);
+
   // Estados
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [isMinimized, setIsMinimized] = useState(false);

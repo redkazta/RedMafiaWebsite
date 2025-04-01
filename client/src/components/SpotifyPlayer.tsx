@@ -44,7 +44,12 @@ export default function SpotifyPlayer({
           trackId,
           albumId,
           playlistId,
-          isPlaying: true
+          isPlaying: true,
+          title: "ALV Las Fresas",
+          artist: "RED MAFIA",
+          audioSrc: "https://p.scdn.co/mp3-preview/7aa1e58d1b2fbb031db3ca2c3dd2a2b8eb60f7c1",
+          coverImage: "https://i.scdn.co/image/ab67616d0000b273d8601e7e6ede248c1bf8c662",
+          guadalajaraReference: "Último Single"
         } 
       });
       window.dispatchEvent(event);

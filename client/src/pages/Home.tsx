@@ -133,6 +133,7 @@ export default function Home() {
           guadalajaraReference: "Último Single"
         }}
         autoPlay={true}
+        className="z-50"
       />
     </div>
   );
