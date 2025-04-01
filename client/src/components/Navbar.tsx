@@ -114,7 +114,7 @@ export default function Navbar() {
           <div className="h-16 md:h-20 w-auto overflow-hidden relative">
             <div className="absolute inset-0 bg-[#FF0000]/10 rounded-full blur-md opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
             <img 
-              src="/assets/logo-red-mafia.png" 
+              src="attached_assets/imagen_1743454510922.png" 
               alt="Red Mafia" 
               className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" 
             />
