@@ -28,7 +28,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       <div className="flex justify-between items-center p-4 border-b border-[#950101]/50">
         <div className="flex items-center">
           <img 
-            src="/images/logo-red-mafia.png" 
+            src="/assets/logo-red-mafia.png" 
             alt="RED MAFIA" 
             className="h-12 w-auto"
           />
