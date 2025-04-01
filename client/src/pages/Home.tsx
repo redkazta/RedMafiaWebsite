@@ -109,6 +109,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </main>
 
         {releasesLoading ? (
           <div>Cargando lanzamientos...</div>
