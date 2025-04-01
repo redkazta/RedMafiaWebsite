@@ -49,8 +49,6 @@ function Router() {
   
   return (
     <>
-      <Navbar />
-      
       {/* Decoración de esquinas con "sangre" */}
       <BloodCorner position="top-left" size={150} />
       <BloodCorner position="bottom-right" size={150} />
@@ -200,6 +198,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className={`relative theme-${currentTheme}`}>
+        <Navbar />
         {/* Efecto de partículas de fuego solo en el tema 'fire' */}
         {currentTheme === 'fire' && (
           <FireParticles 
