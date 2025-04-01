@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import HeroSection from "@/components/HeroSection";
-import FloatingPlayer from "@/components/animated/FloatingPlayer";
 import ReleasesSection from "@/components/ReleasesSection";
 import NewsSection from "@/components/NewsSection";
 import ConcertsSection from "@/components/ConcertsSection";
