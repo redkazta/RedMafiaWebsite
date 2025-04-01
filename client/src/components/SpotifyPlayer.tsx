@@ -37,14 +37,19 @@ export default function SpotifyPlayer({
   if (!url) return null;
 
   useEffect(() => {
-    if (trackId) {
+    if (trackId || albumId || playlistId) {
       // Dispatch event when track changes
       const event = new CustomEvent('trackChange', { 
-        detail: { trackId } 
+        detail: { 
+          trackId,
+          albumId,
+          playlistId,
+          isPlaying: true
+        } 
       });
       window.dispatchEvent(event);
     }
-  }, [trackId]);
+  }, [trackId, albumId, playlistId]);
 
   return (
     <div className={`spotify-player-container ${className}`}>

@@ -19,6 +19,20 @@ export default function FloatingPlayer({
   track,
   autoPlay = false
 }: FloatingPlayerProps) {
+  // Listen for track changes from Spotify players
+  useEffect(() => {
+    const handleTrackChange = (e: CustomEvent) => {
+      const { trackId, albumId, playlistId, isPlaying } = e.detail;
+      if (isPlaying) {
+        setIsPlaying(true);
+      }
+    };
+
+    window.addEventListener('trackChange', handleTrackChange as EventListener);
+    return () => {
+      window.removeEventListener('trackChange', handleTrackChange as EventListener);
+    };
+  }, []);
   // Estados
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [isMinimized, setIsMinimized] = useState(false);
