@@ -53,11 +53,55 @@ export default function Home() {
     <div className="min-h-screen bg-[#0A0A0A]">
       <main>
         <div className="container mx-auto px-4">
-          <div className="py-8">
-            <div className="mb-8">
-              <h3 className="text-white text-xl mb-4">Red Mafia Hits</h3>
-              <SpotifyPlayer 
-                trackId="0LgauOCJwpPugwBRZhumCj"
+          {/* Sección de Últimos Lanzamientos */}
+          <section className="py-12">
+            <h2 className="text-3xl font-bold text-red-600 mb-8">Últimos Lanzamientos</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* ALV Las Fresas - Último Lanzamiento */}
+              <div className="md:col-span-2 bg-[#1E1E1E] p-6 rounded-lg">
+                <h3 className="text-white text-xl mb-4">ALV Las Fresas - Último Lanzamiento</h3>
+                <SpotifyPlayer 
+                  trackId="2f1888daa2c9fb0e0f795974a458d0ae1d21df54"
+                  className="w-full"
+                  height={380}
+                />
+              </div>
+
+              {/* Playlists */}
+              <div className="space-y-6">
+                <div className="bg-[#1E1E1E] p-4 rounded-lg">
+                  <h3 className="text-white text-lg mb-3">Red Mafia Hits</h3>
+                  <SpotifyPlayer 
+                    trackId="2f1888daa2c9fb0e0f795974a458d0ae1d21df54"
+                    className="w-full"
+                    height={180}
+                    view="compact"
+                  />
+                </div>
+
+                <div className="bg-[#1E1E1E] p-4 rounded-lg">
+                  <h3 className="text-white text-lg mb-3">Red Mafia Trap Collection</h3>
+                  <SpotifyPlayer 
+                    trackId="9c11c16e4907b9c9ee31c8d70a702d4b92748de4"
+                    className="w-full"
+                    height={180}
+                    view="compact"
+                  />
+                </div>
+
+                <div className="bg-[#1E1E1E] p-4 rounded-lg">
+                  <h3 className="text-white text-lg mb-3">Red Mafia Esenciales</h3>
+                  <SpotifyPlayer 
+                    trackId="df2b5f123d4624a7f62c1765e59d1cd8435a3477"
+                    className="w-full"
+                    height={180}
+                    view="compact"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
                 className="w-full"
                 height={180}
                 view="compact"
