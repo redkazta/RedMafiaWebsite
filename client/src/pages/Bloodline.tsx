@@ -24,11 +24,11 @@ interface SongInfluence {
 
 // Datos de canciones (hardcoded por ahora ya que no tenemos una tabla de canciones)
 const songs = [
-  { id: 1, title: "TRAP MAFIA", album: "SANGRE Y FUEGO", year: "2023" },
-  { id: 2, title: "ALV Las Fresas", album: "SANGRE Y FUEGO", year: "2023" },
-  { id: 3, title: "Red Mafia Hits", album: "SANGRE Y FUEGO", year: "2023" },
+  { id: 1, title: "TRAP MAFIA", album: "TRAP COLLECTION", year: "2023" },
+  { id: 2, title: "ALV Las Fresas", album: "TRAP COLLECTION", year: "2023" },
+  { id: 3, title: "Red Mafia Hits", album: "TRAP COLLECTION", year: "2023" },
   { id: 4, title: "Red Mafia Trap Collection", album: "COLECCIONES", year: "2023" },
-  { id: 5, title: "Red Mafia Esenciales", album: "COLECCIONES", year: "2023" } },
+  { id: 5, title: "Red Mafia Esenciales", album: "COLECCIONES", year: "2023" }
 ];
 
 export default function Bloodline() {
