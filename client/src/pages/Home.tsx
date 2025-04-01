@@ -101,10 +101,25 @@ export default function Home() {
         </div>
       </div>
 
-      <ReleasesSection isLoading={releasesLoading} releases={releases} />
-      <NewsSection isLoading={newsLoading} news={news} />
-      <ConcertsSection isLoading={concertsLoading} concerts={concerts} />
-      <GallerySection gallery={gallery} />
+      {releasesLoading ? (
+        <div>Cargando lanzamientos...</div>
+      ) : releases ? (
+        <ReleasesSection releases={releases} />
+      ) : null}
+      
+      {newsLoading ? (
+        <div>Cargando noticias...</div>
+      ) : news ? (
+        <NewsSection news={news} />
+      ) : null}
+      
+      {concertsLoading ? (
+        <div>Cargando conciertos...</div>
+      ) : concerts ? (
+        <ConcertsSection concerts={concerts} />
+      ) : null}
+      
+      {gallery && <GallerySection gallery={gallery} />}
       <ContactSection />
     </div>
   );
