@@ -149,6 +149,7 @@ export class MemStorage implements IStorage {
 
   // Inicializar datos de ejemplo
   private initDemoData() {
+    console.log('Initializing demo data...');
     // Releases
     this.createRelease({
       title: "RENEGADES",
