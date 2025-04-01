@@ -10,7 +10,6 @@ import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
 import SpotifyPlayer from "@/components/SpotifyPlayer";
 import { useQuery } from '@tanstack/react-query';
-import { usePlayerStore } from "@/store/player";
 
 export default function Home() {
   const { currentTrackId } = usePlayerStore();
