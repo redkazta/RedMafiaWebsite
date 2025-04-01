@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'wouter';
-import { BloodCorner, NeonLine, FireParticles } from '@/components/animated';
+import { NeonLine, FireParticles } from '@/components/animated';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -307,7 +307,7 @@ export default function Challenges() {
   // Vista principal
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-black to-[#1c0000] py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <BloodCorner />
+
       <FireParticles density={20} />
       
       <div className="max-w-6xl mx-auto">

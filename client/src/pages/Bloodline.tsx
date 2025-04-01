@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { BloodCorner, NeonLine, FireParticles } from '@/components/animated';
+import { NeonLine, FireParticles } from '@/components/animated';
 import { apiRequest } from '@/lib/queryClient';
 
 // Interfaces para los datos
@@ -125,7 +125,7 @@ export default function Bloodline() {
   
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-black to-[#1c0000] py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <BloodCorner />
+
       <FireParticles density={15} />
       
       <div className="max-w-6xl mx-auto">

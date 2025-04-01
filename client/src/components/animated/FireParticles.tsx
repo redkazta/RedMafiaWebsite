@@ -18,6 +18,7 @@ interface FireParticlesProps {
   intensity?: number; // 1-10
   width?: number;
   height?: number;
+  density?: number; // Alias para particleCount para compatibilidad
 }
 
 export default function FireParticles({
@@ -26,8 +27,11 @@ export default function FireParticles({
   active = true,
   intensity = 5,
   width = 300,
-  height = 200
+  height = 200,
+  density
 }: FireParticlesProps) {
+  // Usar density como alias para particleCount si está definido
+  const actualParticleCount = density !== undefined ? density : particleCount;
   const [particles, setParticles] = useState<Particle[]>([]);
   const requestRef = useRef<number | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -58,7 +62,7 @@ export default function FireParticles({
     
     // Crear partículas iniciales
     const initialParticles: Particle[] = [];
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < actualParticleCount; i++) {
       initialParticles.push(createParticle(i));
     }
     
@@ -68,7 +72,7 @@ export default function FireParticles({
     if (canvasRef.current) {
       contextRef.current = canvasRef.current.getContext('2d');
     }
-  }, [active, particleCount, width, height, intensity]);
+  }, [active, actualParticleCount, width, height, intensity]);
   
   // Animar partículas
   useEffect(() => {
