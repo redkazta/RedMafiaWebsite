@@ -1,6 +1,4 @@
-
-import React, { useEffect } from 'react';
-import { usePlayerStore } from '@/store/player';
+import React from 'react';
 
 interface SpotifyPlayerProps {
   trackId?: string;
@@ -14,7 +12,7 @@ interface SpotifyPlayerProps {
 }
 
 export default function SpotifyPlayer({
-  trackId: propTrackId,
+  trackId,
   albumId,
   width = '100%',
   height = 352,
@@ -23,22 +21,12 @@ export default function SpotifyPlayer({
   view = 'standard',
   autoPlay = false
 }: SpotifyPlayerProps) {
-  const { currentTrackId, setTrack } = usePlayerStore();
-  
-  // Si se proporciona un trackId como prop, actualizar el estado global
-  useEffect(() => {
-    if (propTrackId && propTrackId !== currentTrackId) {
-      setTrack(propTrackId);
-    }
-  }, [propTrackId]);
-
-  // Usar el trackId del estado global si no se proporciona uno como prop
-  const contentId = propTrackId || currentTrackId || albumId;
+  const contentId = trackId || albumId;
   const contentType = albumId ? 'album' : 'track';
 
   if (!contentId) return null;
 
-  const url = `https://open.spotify.com/embed/${contentType}/${contentId}?utm_source=generator&theme=${theme}${view !== 'standard' ? '&view=' + view : ''}${autoPlay ? '&autoplay=1' : ''}&referrer=spotify`;
+  const url = `https://open.spotify.com/embed/${contentType}/${contentId}?utm_source=generator&theme=${theme}${view !== 'standard' ? '&view=' + view : ''}${autoPlay ? '&autoplay=1' : ''}`;
 
   return (
     <iframe 

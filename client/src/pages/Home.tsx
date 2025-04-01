@@ -125,6 +125,7 @@ export default function Home() {
           {/* Mini Player */}
           <div className="fixed bottom-4 left-4 z-50">
             <SpotifyPlayer 
+              trackId="0LgauOCJwpPugwBRZhumCj"
               width={300}
               height={80}
               className="rounded-lg shadow-xl bg-black/90"
