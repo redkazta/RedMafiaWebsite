@@ -244,22 +244,27 @@ export default function Home() {
             <div className="mt-4 md:mt-0">
               <div className="w-full max-w-4xl mx-auto mt-8">
                 <SpotifyPlayer
-                  trackId="CHANTE2ID"
+                  trackId="2TQdYJgxFFeJ0LaCKGqAkg"
                   height={80}
                   className="mb-4"
                 />
                 <div className="grid gap-4">
-                  {["ALV LAS FRESAS - Zackly", "CHANTE 2 - Red Lean", "Gargut - Sangre", "Red Lean - Flow Violento"].map((song, index) => (
+                  {[
+                    { title: "ALV LAS FRESAS", artist: "Zackly", cover: "https://i.scdn.co/image/ab67616d00001e02b1c42b76dc1fd933bb8f25e8" },
+                    { title: "CHANTE 2", artist: "Red Lean", cover: "https://i.scdn.co/image/ab67616d00001e023af7c1d71442ff9d4f88a66b" },
+                    { title: "Sangre", artist: "Gargut", cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef" },
+                    { title: "Flow Violento", artist: "Red Lean", cover: "https://i.scdn.co/image/ab67616d00001e02c450c89d3eb750d3535b0a0c" }
+                  ].map((song, index) => (
                     <div key={index} 
                       className="bg-[#950101]/10 p-4 rounded-lg border border-[#950101]/30 hover:border-[#950101] transition-all group relative overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-r from-[#950101]/0 via-[#950101]/5 to-[#950101]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-[#950101]/20 rounded-full flex items-center justify-center">
-                          <Music className="w-6 h-6 text-[#950101]" />
+                        <div className="w-12 h-12 overflow-hidden rounded-lg">
+                          <img src={song.cover} alt={song.title} className="w-full h-full object-cover" />
                         </div>
                         <div>
-                          <h3 className="text-white font-bold">{song}</h3>
-                          <p className="text-[#F5F5F5]/70 text-sm">RED MAFIA</p>
+                          <h3 className="text-white font-bold">{song.title}</h3>
+                          <p className="text-[#F5F5F5]/70 text-sm">{song.artist}</p>
                         </div>
                       </div>
                     </div>
