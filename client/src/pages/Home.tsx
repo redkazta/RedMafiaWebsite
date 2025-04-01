@@ -123,14 +123,16 @@ export default function Home() {
       {gallery && <GallerySection gallery={gallery} />}
       <ContactSection />
       
-      {/* Floating Player */}
-      <div className="fixed bottom-4 left-4 z-50">
-        <SpotifyPlayer
-          albumId="0LgauOCJwpPugwBRZhumCj"
-          width={300}
-          height={80}
-          className="rounded-lg shadow-xl"
-          mini={true}
+      {/* Fixed Spotify Embed */}
+      <div className="fixed bottom-0 left-0 w-full z-50">
+        <iframe 
+          src="https://open.spotify.com/embed/album/0LgauOCJwpPugwBRZhumCj?utm_source=generator&theme=0"
+          width="100%" 
+          height="80" 
+          frameBorder="0" 
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+          loading="lazy"
+          className="bg-black/90"
         />
       </div>
     </div>
