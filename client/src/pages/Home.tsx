@@ -268,12 +268,6 @@ export default function Home() {
                       artist: "Gargut", 
                       cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
                       spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
-                    },
-                    { 
-                      title: "Flow Violento", 
-                      artist: "Red Lean", 
-                      cover: "https://i.scdn.co/image/ab67616d00001e02c450c89d3eb750d3535b0a0c",
-                      spotifyId: "1tBLwe6Ds1zRaEAOA0Rs8L"
                     }
                   ].map((song, index) => (
                     <div key={index} 
