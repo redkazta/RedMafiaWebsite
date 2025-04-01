@@ -136,8 +136,8 @@ export default function Home() {
 
                 <div className="relative overflow-hidden rounded-lg transition-all duration-500 group-hover:shadow-[0_0_25px_rgba(255,0,0,0.3)] transform group-hover:scale-[1.02]">
                   <img 
-                    src={releases[0].coverImage} 
-                    alt={releases[0].title}
+                    src="https://i.scdn.co/image/ab67616d00001e02b1c42b76dc1fd933bb8f25e8" 
+                    alt="ALV LAS FRESAS - Zackly"
                     className="w-full h-auto rounded-lg shadow-lg transition-transform duration-700 group-hover:scale-105"
                   />
 
@@ -175,7 +175,7 @@ export default function Home() {
                     <span>1 pista</span>
                   </div>
                   <p className="text-[#F5F5F5] text-lg leading-relaxed mb-8 border-l-2 border-[#950101] pl-4">
-                    El nuevo sencillo de Zackly - ALV LAS FRESAS, disponible ahora en todas las plataformas.
+                    El nuevo sencillo de Zackly - ALV LAS FRESAS trae un sonido fresco y vibrante que marca un nuevo capítulo en la evolución musical de la escena. Con su mezcla única de estilos y letras pegajosas, esta canción promete convertirse en un himno del momento.
                   </p>
                 </div>
 
@@ -250,10 +250,30 @@ export default function Home() {
                 />
                 <div className="grid gap-4">
                   {[
-                    { title: "ALV LAS FRESAS", artist: "Zackly", cover: "https://i.scdn.co/image/ab67616d00001e02b1c42b76dc1fd933bb8f25e8" },
-                    { title: "CHANTE 2", artist: "Red Lean", cover: "https://i.scdn.co/image/ab67616d00001e023af7c1d71442ff9d4f88a66b" },
-                    { title: "Sangre", artist: "Gargut", cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef" },
-                    { title: "Flow Violento", artist: "Red Lean", cover: "https://i.scdn.co/image/ab67616d00001e02c450c89d3eb750d3535b0a0c" }
+                    { 
+                      title: "ALV LAS FRESAS", 
+                      artist: "Zackly", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e02b1c42b76dc1fd933bb8f25e8",
+                      spotifyId: "2TQdYJgxFFeJ0LaCKGqAkg"
+                    },
+                    { 
+                      title: "CHANTE 2", 
+                      artist: "Red Lean", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e023af7c1d71442ff9d4f88a66b",
+                      spotifyId: "5LYJ631w9ps5h9tdvac7yP"
+                    },
+                    { 
+                      title: "Sangre", 
+                      artist: "Gargut", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e02eee1365a005bf57b6acb16ef",
+                      spotifyId: "0ROeJgD0BDNn7tOUxmPpgV"
+                    },
+                    { 
+                      title: "Flow Violento", 
+                      artist: "Red Lean", 
+                      cover: "https://i.scdn.co/image/ab67616d00001e02c450c89d3eb750d3535b0a0c",
+                      spotifyId: "1tBLwe6Ds1zRaEAOA0Rs8L"
+                    }
                   ].map((song, index) => (
                     <div key={index} 
                       className="bg-[#950101]/10 p-4 rounded-lg border border-[#950101]/30 hover:border-[#950101] transition-all group relative overflow-hidden">
