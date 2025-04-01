@@ -15,6 +15,11 @@ import Contact from "@/pages/Contact";
 import About from "@/pages/About";
 import Merchandise from "@/pages/Merchandise";
 import MediaKit from "@/pages/MediaKit";
+// Nuevas páginas
+import Familia from "@/pages/Familia";  // Sistema de membresía
+import MerchDesign from "@/pages/MerchDesign";  // Diseña el próximo merch
+import Bloodline from "@/pages/Bloodline";  // Árbol de influencias
+import Challenges from "@/pages/Challenges";  // Sistema de desafíos
 
 // Componentes animados
 import { RedMafiaPageTransition, FloatingPlayer, BloodCorner, FireParticles } from "@/components/animated";
@@ -128,6 +133,37 @@ function Router() {
             </ContentWrapper>
           )}
         </Route>
+        
+        {/* Nuevas rutas para las funcionalidades */}
+        <Route path="/familia">
+          {() => (
+            <ContentWrapper>
+              <Familia />
+            </ContentWrapper>
+          )}
+        </Route>
+        <Route path="/disena-merch">
+          {() => (
+            <ContentWrapper>
+              <MerchDesign />
+            </ContentWrapper>
+          )}
+        </Route>
+        <Route path="/bloodline">
+          {() => (
+            <ContentWrapper>
+              <Bloodline />
+            </ContentWrapper>
+          )}
+        </Route>
+        <Route path="/challenges">
+          {() => (
+            <ContentWrapper>
+              <Challenges />
+            </ContentWrapper>
+          )}
+        </Route>
+        
         <Route>
           {() => (
             <ContentWrapper>

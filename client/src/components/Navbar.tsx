@@ -175,6 +175,88 @@ export default function Navbar() {
               <NavItem href="/galeria" text="Galería" />
               <NavItem href="/tienda" text="Tienda" />
               <NavItem href="/media-kit" text="Media Kit" />
+              
+              {/* Menú desplegable para Comunidad */}
+              <li className="relative group">
+                <button className="px-3 py-2.5 rounded-md text-[#F5F5F5] transition-all relative flex items-center font-medium group overflow-hidden hover:text-[#FF0000] hover:bg-[#1E1E1E]">
+                  <span className="relative z-10 flex items-center">
+                    Comunidad
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      className="h-4 w-4 ml-1 transition-transform duration-300 group-hover:rotate-180" 
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </span>
+                  
+                  {/* Efecto de subrayado */}
+                  <span className="absolute bottom-1 left-3 right-3 h-0.5 bg-[#950101] transform transition-transform duration-300 scale-x-0 group-hover:scale-x-100" />
+                  
+                  {/* Efecto de brillo al hacer hover */}
+                  <span className="absolute inset-0 bg-[#FF0000]/0 group-hover:bg-[#FF0000]/5 transition-colors duration-500"></span>
+                </button>
+                
+                {/* Menú desplegable */}
+                <div className="absolute left-0 top-full mt-1 w-48 bg-black/95 backdrop-blur-sm border border-[#950101]/60 shadow-xl rounded-md overflow-hidden transform scale-y-0 opacity-0 origin-top group-hover:scale-y-100 group-hover:opacity-100 transition-all duration-300 z-50">
+                  <ul className="py-1 divide-y divide-[#950101]/20">
+                    <li>
+                      <Link 
+                        href="/familia" 
+                        className="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-[#950101]/50 transition-colors duration-300"
+                      >
+                        <span className="flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                          La Familia
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/disena-merch" 
+                        className="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-[#950101]/50 transition-colors duration-300"
+                      >
+                        <span className="flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          </svg>
+                          Diseña Merch
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/bloodline" 
+                        className="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-[#950101]/50 transition-colors duration-300"
+                      >
+                        <span className="flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                          </svg>
+                          Bloodline
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link 
+                        href="/challenges" 
+                        className="block px-4 py-2.5 text-gray-300 hover:text-white hover:bg-[#950101]/50 transition-colors duration-300"
+                      >
+                        <span className="flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                          </svg>
+                          Red Challenges
+                        </span>
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </li>
               <li>
                 <Link 
                   href="/contacto" 
