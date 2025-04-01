@@ -152,11 +152,11 @@ export class MemStorage implements IStorage {
     console.log('Initializing demo data...');
     // Releases
     this.createRelease({
-      title: "RENEGADES",
+      title: "SANGRE Y FUEGO",
       type: "Álbum",
       year: "2023",
-      tracks: 13,
-      description: "Nuestro álbum debut que captura la esencia cruda y poderosa del heavy metal moderno. Una explosión de energía y letras profundas.",
+      tracks: 12,
+      description: "Nuestro álbum debut que captura la esencia cruda y poderosa del metal latino. Una fusión única de agresividad y pasión.",
       coverImage: "/assets/rh.jpeg",
       audioFiles: [
         "https://p.scdn.co/mp3-preview/2f1888daa2c9fb0e0f795974a458d0ae1d21df54",
@@ -164,19 +164,18 @@ export class MemStorage implements IStorage {
         "https://p.scdn.co/mp3-preview/df2b5f123d4624a7f62c1765e59d1cd8435a3477"
       ],
       trackTitles: [
-        "The Awakening",
-        "Blood Warriors",
-        "Metal Revolution",
-        "Eternal Rage",
-        "Demon's Call",
-        "Night Stalkers",
-        "Thunder Road",
-        "Steel Warriors",
-        "Dark Symphony",
-        "Last Stand",
-        "Renegade Heart",
-        "Legacy of Fire",
-        "Immortal Dreams"
+        "Puño de Hierro",
+        "Noches Sangrientas",
+        "Fuego en las Calles",
+        "Reina de la Noche",
+        "Sombras del Pasado",
+        "Alma de Metal",
+        "Guerreros del Sur",
+        "Herederos del Fuego",
+        "Sangre en las Venas",
+        "Código de Honor",
+        "Legado Eterno",
+        "Llamas de Libertad"
       ]
     });
     

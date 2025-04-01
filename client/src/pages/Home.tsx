@@ -58,28 +58,34 @@ export default function Home() {
           {/* Álbum Principal */}
           <div className="spotify-container">
             <h3 className="text-white text-xl mb-4">Último Álbum</h3>
-            <SpotifyPlayer 
-              albumId="1DFixLWuPkv3KT3TnV35m3"
-              className="w-full"
-            />
+            <Link to="/lanzamientos/1">
+              <SpotifyPlayer 
+                playlistId="3ojUCBn2gpPULJ9U6FjQIB"
+                className="w-full"
+              />
+            </Link>
           </div>
           
           {/* Playlist de la Banda */}
           <div className="spotify-container">
             <h3 className="text-white text-xl mb-4">Playlist Oficial</h3>
-            <SpotifyPlayer 
-              playlistId="3ojUCBn2gpPULJ9U6FjQIB"
-              className="w-full"
-            />
+            <Link to="/lanzamientos">
+              <SpotifyPlayer 
+                playlistId="3ojUCBn2gpPULJ9U6FjQIB"
+                className="w-full"
+              />
+            </Link>
           </div>
           
           {/* Single Destacado */}
           <div className="spotify-container">
             <h3 className="text-white text-xl mb-4">Single Destacado</h3>
-            <SpotifyPlayer 
-              trackId="0VjIjW4GlUZAMYd2vXMi3b"
-              className="w-full"
-            />
+            <Link to="/lanzamientos/2">
+              <SpotifyPlayer 
+                playlistId="3ojUCBn2gpPULJ9U6FjQIB"
+                className="w-full"
+              />
+            </Link>
           </div>
         </div>
       </div>
