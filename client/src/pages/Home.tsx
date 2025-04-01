@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import HeroSection from "@/components/HeroSection";
+import FloatingPlayer from "@/components/animated/FloatingPlayer";
 import ReleasesSection from "@/components/ReleasesSection";
 import NewsSection from "@/components/NewsSection";
 import ConcertsSection from "@/components/ConcertsSection";
@@ -121,6 +122,18 @@ export default function Home() {
       
       {gallery && <GallerySection gallery={gallery} />}
       <ContactSection />
+      
+      {/* Floating Player */}
+      <FloatingPlayer
+        track={{
+          title: "ALV Las Fresas",
+          artist: "RED MAFIA",
+          audioSrc: "https://p.scdn.co/mp3-preview/your-preview-url-here",
+          coverImage: "https://i.scdn.co/image/ab67616d0000b273d8601e7e6ede248c1bf8c662",
+          guadalajaraReference: "Directo desde GDL"
+        }}
+        autoPlay={true}
+      />
     </div>
   );
 }

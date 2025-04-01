@@ -141,7 +141,7 @@ export default function FloatingPlayer({
   // Versión completa (reproductor flotante)
   return (
     <div className={`fixed bottom-4 left-4 z-30 ${className}`}>
-      <div className="flex items-center bg-[#1A0505] text-white rounded-full shadow-lg border border-[#950101]/30 p-2 w-auto max-w-[320px] min-w-[240px]">
+      <div className="flex items-center bg-[#1A0505] text-white rounded-full shadow-lg border border-[#950101]/30 p-3 w-auto max-w-[448px] min-w-[336px]">
         {/* Audio oculto */}
         <audio ref={audioRef} src={track.audioSrc} preload="metadata" />
 
