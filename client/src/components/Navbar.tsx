@@ -127,11 +127,6 @@ export default function Navbar() {
             <h1 className="red-mafia-title text-3xl md:text-4xl tracking-wider group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_2px_rgba(255,0,0,0.5)]">RED MAFIA</h1>
             <div className="flex items-center">
               <p className="text-xs md:text-sm text-[#F5F5F5]/70 italic border-l-2 border-[#FF0000]/60 pl-2 mt-1">HACIENDO ALGO NUEVO WEY, ALGO BIEN</p>
-              
-              {/* Indicador de audio activo */}
-              <div className="ml-2 mt-1">
-                <Equalizer active={isAudioActive} width={30} height={12} barCount={4} />
-              </div>
             </div>
           </div>
         </Link>
