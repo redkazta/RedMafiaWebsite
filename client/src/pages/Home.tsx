@@ -61,7 +61,7 @@ export default function Home() {
               <div className="md:col-span-2 bg-[#1E1E1E] p-6 rounded-lg">
                 <h3 className="text-white text-xl mb-4">ALV Las Fresas - Último Lanzamiento</h3>
                 <SpotifyPlayer 
-                  trackId="2f1888daa2c9fb0e0f795974a458d0ae1d21df54"
+                  albumId="0LgauOCJwpPugwBRZhumCj"
                   className="w-full"
                   height={380}
                 />
@@ -71,7 +71,7 @@ export default function Home() {
                 <div className="bg-[#1E1E1E] p-4 rounded-lg">
                   <h3 className="text-white text-lg mb-3">Red Mafia Hits</h3>
                   <SpotifyPlayer 
-                    trackId="2f1888daa2c9fb0e0f795974a458d0ae1d21df54"
+                    trackId="3ojUCBn2gpPULJ9U6FjQIB"
                     className="w-full"
                     height={180}
                     view="compact"
@@ -81,7 +81,7 @@ export default function Home() {
                 <div className="bg-[#1E1E1E] p-4 rounded-lg">
                   <h3 className="text-white text-lg mb-3">Red Mafia Trap Collection</h3>
                   <SpotifyPlayer 
-                    trackId="9c11c16e4907b9c9ee31c8d70a702d4b92748de4"
+                    trackId="3ojUCBn2gpPULJ9U6FjQIB"
                     className="w-full"
                     height={180}
                     view="compact"
@@ -91,7 +91,7 @@ export default function Home() {
                 <div className="bg-[#1E1E1E] p-4 rounded-lg">
                   <h3 className="text-white text-lg mb-3">Red Mafia Esenciales</h3>
                   <SpotifyPlayer 
-                    trackId="df2b5f123d4624a7f62c1765e59d1cd8435a3477"
+                    trackId="3ojUCBn2gpPULJ9U6FjQIB"
                     className="w-full"
                     height={180}
                     view="compact"

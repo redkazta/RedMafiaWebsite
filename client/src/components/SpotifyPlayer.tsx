@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface SpotifyPlayerProps {
@@ -7,7 +8,7 @@ interface SpotifyPlayerProps {
   height?: number | string;
   className?: string;
   theme?: string;
-  view?: 'minimal' | 'compact' | 'standard';
+  view?: 'compact' | 'basic' | 'list';
   autoPlay?: boolean;
 }
 
@@ -17,25 +18,25 @@ export default function SpotifyPlayer({
   width = '100%',
   height = 352,
   className = '',
-  theme = '0',
-  view = 'standard',
+  theme = 'dark',
+  view = 'list',
   autoPlay = false
 }: SpotifyPlayerProps) {
   const contentId = trackId || albumId;
-  const contentType = albumId ? 'album' : 'track';
-
+  const contentType = albumId ? 'album' : 'playlist';
+  
   if (!contentId) return null;
 
-  const url = `https://open.spotify.com/embed/${contentType}/${contentId}?utm_source=generator&theme=${theme}${view !== 'standard' ? '&view=' + view : ''}${autoPlay ? '&autoplay=1' : ''}`;
-
+  // Use the official Spotify embed format
+  const embedUrl = `https://open.spotify.com/embed/${contentType}/${contentId}`;
+  
   return (
-    <iframe 
-      src={url}
-      width={width} 
-      height={height} 
-      frameBorder="0" 
-      allowFullScreen 
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+    <iframe
+      style={{ borderRadius: '12px' }}
+      src={embedUrl}
+      width={width}
+      height={height}
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       loading="lazy"
       className={className}
     />
