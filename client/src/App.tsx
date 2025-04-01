@@ -49,8 +49,6 @@ function Router() {
   
   return (
     <>
-      <Navbar />
-      
       {/* Decoración de esquinas con "sangre" */}
       <BloodCorner position="top-left" size={150} />
       <BloodCorner position="bottom-right" size={150} />
