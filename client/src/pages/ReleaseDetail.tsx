@@ -13,7 +13,12 @@ export default function ReleaseDetail() {
   const [isMuted, setIsMuted] = useState(false);
 
   const { data: release, isLoading, error } = useQuery<Release>({
-    queryKey: [`/api/releases/${id}`],
+    queryKey: ['release', id],
+    queryFn: async () => {
+      const response = await fetch(`/api/releases/${id}`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    }
   });
 
   const togglePlayPause = (index: number) => {
