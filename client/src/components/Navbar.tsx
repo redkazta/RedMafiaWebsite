@@ -107,14 +107,14 @@ export default function Navbar() {
       
       <nav className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between relative z-10">
         {/* Logo con efectos mejorados */}
-        <Link href="/" className="flex flex-col items-center mb-6 md:mb-0 group relative">
+        <Link href="/" className="flex items-center mb-6 md:mb-0 group relative">
           {/* Aureola del logo */}
           <div className="absolute -inset-4 bg-[#FF0000]/5 blur-xl rounded-full group-hover:bg-[#FF0000]/10 transition-all duration-700 opacity-0 group-hover:opacity-100"></div>
           
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex items-center gap-4">
             <h1 className="red-mafia-title text-3xl md:text-4xl tracking-wider group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_2px_rgba(255,0,0,0.5)]">RED MAFIA</h1>
-            <div className="text-center">
-              <p className="text-xs md:text-sm text-[#F5F5F5]/70 italic border-t-2 border-[#FF0000]/60 pt-2">HACIENDO ALGO NUEVO WEY, ALGO BIEN</p>
+            <div className="border-l-2 border-[#FF0000]/60 pl-4">
+              <p className="text-xs md:text-sm text-[#F5F5F5]/70 italic">HACIENDO ALGO NUEVO WEY, ALGO BIEN</p>
             </div>
           </div>
         </Link>
