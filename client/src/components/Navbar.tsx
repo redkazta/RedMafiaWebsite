@@ -111,8 +111,8 @@ export default function Navbar() {
           {/* Aureola del logo */}
           <div className="absolute -inset-4 bg-[#FF0000]/5 blur-xl rounded-full group-hover:bg-[#FF0000]/10 transition-all duration-700 opacity-0 group-hover:opacity-100"></div>
           
-          <div className="h-16 md:h-20 w-auto overflow-hidden relative">
-            <div className="absolute inset-0 bg-[#FF0000]/10 rounded-full blur-md opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
+          <div className="h-20 md:h-28 w-auto overflow-hidden relative">
+            <div className="absolute inset-0 bg-[#FF0000]/10 rounded-lg blur-md opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
             <img 
               src="/assets/rh.jpeg" 
               alt="Red Mafia" 
@@ -120,7 +120,7 @@ export default function Navbar() {
             />
           </div>
           
-          <div className="ml-4 relative">
+          <div className="ml-4 relative hidden md:block">
             {/* Efecto de brillo detrás del texto */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#FF0000]/5 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
@@ -129,7 +129,7 @@ export default function Navbar() {
               <p className="text-xs md:text-sm text-[#F5F5F5]/70 italic border-l-2 border-[#FF0000]/60 pl-2 mt-1">HACIENDO ALGO NUEVO WEY, ALGO BIEN</p>
               
               {/* Indicador de audio activo */}
-              <div className="ml-2 mt-1 hidden md:block">
+              <div className="ml-2 mt-1">
                 <Equalizer active={isAudioActive} width={30} height={12} barCount={4} />
               </div>
             </div>

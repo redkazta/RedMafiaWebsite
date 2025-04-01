@@ -30,9 +30,8 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <img 
             src="/assets/rh.jpeg" 
             alt="RED MAFIA" 
-            className="h-12 w-auto"
+            className="h-20 w-auto object-contain"
           />
-          <h2 className="text-white ml-3 text-xl red-mafia-title">RED MAFIA</h2>
         </div>
         <button 
           onClick={onClose}

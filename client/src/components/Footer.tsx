@@ -63,17 +63,13 @@ export default function Footer() {
             </div>
             
             <div className="flex items-center mb-6 relative">
-              <div className="h-16 w-auto overflow-hidden red-mafia-glow bg-[#ff0000]/10 p-1 rounded-md border border-[#ff0000]/20 shadow-lg group">
+              <div className="h-20 w-auto overflow-hidden red-mafia-glow bg-[#ff0000]/10 p-2 rounded-md border border-[#ff0000]/20 shadow-lg group">
                 <img 
                   src="/assets/rh.jpeg" 
                   alt="Red Mafia" 
                   className="h-full w-auto object-contain drop-shadow-[0_0_5px_rgba(255,0,0,0.5)] transition-all duration-700 group-hover:scale-110" 
                 />
                 <div className="absolute inset-0 bg-[#FF0000]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm"></div>
-              </div>
-              <div className="ml-3">
-                <h4 className="red-mafia-title text-2xl text-distort">RED MAFIA</h4>
-                <p className="text-xs text-[#F5F5F5]/70 uppercase border-l-2 border-[#FF0000]/70 pl-2">Haciendo algo nuevo wey, algo bien</p>
               </div>
             </div>
             
