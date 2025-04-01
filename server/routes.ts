@@ -1,7 +1,19 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { contactSchema, insertConcertSchema, insertGallerySchema, insertNewsSchema, insertReleaseSchema } from "@shared/schema";
+import { 
+  contactSchema, 
+  insertConcertSchema, 
+  insertGallerySchema, 
+  insertNewsSchema, 
+  insertReleaseSchema,
+  membershipSchema,
+  merchDesignSchema,
+  influencerSchema,
+  songInfluenceSchema,
+  challengeSchema,
+  challengeEntrySchema
+} from "@shared/schema";
 import { z, ZodError } from "zod";
 import { WebSocketServer, WebSocket } from 'ws';
 import { v4 as uuidv4 } from 'uuid';
@@ -218,6 +230,546 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
       }
       res.status(500).json({ message: "Error al enviar el mensaje" });
+    }
+  });
+
+  // ===== SISTEMA DE MEMBRESÍA "LA FAMILIA" =====
+  
+  // Obtener todas las membresías (admin)
+  app.get("/api/memberships", async (req, res) => {
+    try {
+      const memberships = await storage.getMemberships();
+      res.json(memberships);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener membresías" });
+    }
+  });
+  
+  // Obtener membresía del usuario actual
+  app.get("/api/memberships/me", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const membership = await storage.getMembershipByUserId(req.user.id);
+      if (membership) {
+        res.json(membership);
+      } else {
+        res.status(404).json({ message: "Membresía no encontrada" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener membresía" });
+    }
+  });
+  
+  // Crear membresía
+  app.post("/api/memberships", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      // Verificar si ya existe una membresía para el usuario
+      const existingMembership = await storage.getMembershipByUserId(req.user.id);
+      if (existingMembership) {
+        return res.status(400).json({ message: "Ya tienes una membresía" });
+      }
+      
+      const data = membershipSchema.parse({
+        ...req.body,
+        userId: req.user.id,
+        status: "active" // Por defecto, la membresía nueva está activa
+      });
+      
+      const membership = await storage.createMembership(data);
+      res.status(201).json(membership);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al crear membresía" });
+    }
+  });
+  
+  // Actualizar membresía
+  app.patch("/api/memberships/:id", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const id = parseInt(req.params.id);
+      
+      // Verificar si la membresía existe y pertenece al usuario
+      const membership = await storage.getMembershipByUserId(req.user.id);
+      if (!membership || membership.id !== id) {
+        return res.status(404).json({ message: "Membresía no encontrada" });
+      }
+      
+      const updatedMembership = await storage.updateMembership(id, req.body);
+      res.json(updatedMembership);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al actualizar membresía" });
+    }
+  });
+  
+  // ===== SISTEMA "DISEÑA EL PRÓXIMO MERCH" =====
+  
+  // Obtener todos los diseños (con filtro opcional)
+  app.get("/api/merch-designs", async (req, res) => {
+    try {
+      const { category, status } = req.query;
+      
+      const filter: {category?: string; status?: string} = {};
+      if (category) filter.category = category as string;
+      if (status) filter.status = status as string;
+      
+      const designs = await storage.getMerchDesigns(filter);
+      res.json(designs);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener diseños" });
+    }
+  });
+  
+  // Obtener un diseño específico
+  app.get("/api/merch-designs/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const design = await storage.getMerchDesign(id);
+      
+      if (design) {
+        res.json(design);
+      } else {
+        res.status(404).json({ message: "Diseño no encontrado" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener diseño" });
+    }
+  });
+  
+  // Obtener diseños del usuario actual
+  app.get("/api/merch-designs/user/me", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const designs = await storage.getMerchDesignsByUser(req.user.id);
+      res.json(designs);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener diseños" });
+    }
+  });
+  
+  // Crear un nuevo diseño
+  app.post("/api/merch-designs", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const data = merchDesignSchema.parse({
+        ...req.body,
+        userId: req.user.id,
+        status: "pending" // Por defecto, los diseños nuevos están pendientes de aprobación
+      });
+      
+      const design = await storage.createMerchDesign(data);
+      res.status(201).json(design);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al crear diseño" });
+    }
+  });
+  
+  // Actualizar un diseño
+  app.patch("/api/merch-designs/:id", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const id = parseInt(req.params.id);
+      const design = await storage.getMerchDesign(id);
+      
+      // Verificar si el diseño existe y pertenece al usuario (a menos que sea admin)
+      if (!design || (design.userId !== req.user.id && !req.user.isAdmin)) {
+        return res.status(404).json({ message: "Diseño no encontrado o no tienes permiso para editarlo" });
+      }
+      
+      // Los usuarios normales solo pueden editar diseños pendientes
+      if (design.userId === req.user.id && design.status !== "pending" && !req.user.isAdmin) {
+        return res.status(403).json({ message: "Solo puedes editar diseños que estén en estado pendiente" });
+      }
+      
+      const updatedDesign = await storage.updateMerchDesign(id, req.body);
+      res.json(updatedDesign);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al actualizar diseño" });
+    }
+  });
+  
+  // Votar por un diseño
+  app.post("/api/merch-designs/:id/vote", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const designId = parseInt(req.params.id);
+      const design = await storage.getMerchDesign(designId);
+      
+      // Verificar si el diseño existe y está aprobado
+      if (!design || design.status !== "approved") {
+        return res.status(404).json({ message: "Diseño no encontrado o no disponible para votación" });
+      }
+      
+      // No se puede votar por diseños propios
+      if (design.userId === req.user.id) {
+        return res.status(403).json({ message: "No puedes votar por tus propios diseños" });
+      }
+      
+      const result = await storage.voteMerchDesign(req.user.id, designId);
+      
+      if (result) {
+        res.json({ success: true, message: "Voto registrado correctamente" });
+      } else {
+        res.status(400).json({ message: "Ya has votado por este diseño" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error al votar por el diseño" });
+    }
+  });
+  
+  // Obtener los diseños por los que ha votado el usuario
+  app.get("/api/merch-designs/votes/me", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const votedDesignIds = await storage.getVotedDesigns(req.user.id);
+      res.json(votedDesignIds);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener votos" });
+    }
+  });
+  
+  // ===== SISTEMA "BLOODLINE" - ÁRBOL DE INFLUENCIAS MUSICALES =====
+  
+  // Obtener todos los influencers
+  app.get("/api/influencers", async (req, res) => {
+    try {
+      const influencers = await storage.getInfluencers();
+      res.json(influencers);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener influencers" });
+    }
+  });
+  
+  // Obtener un influencer específico
+  app.get("/api/influencers/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const influencer = await storage.getInfluencer(id);
+      
+      if (influencer) {
+        res.json(influencer);
+      } else {
+        res.status(404).json({ message: "Influencer no encontrado" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener influencer" });
+    }
+  });
+  
+  // Crear un nuevo influencer (solo admin)
+  app.post("/api/influencers", async (req, res) => {
+    if (!req.isAuthenticated?.() || !req.user.isAdmin) {
+      return res.status(403).json({ message: "No autorizado" });
+    }
+    
+    try {
+      const data = influencerSchema.parse(req.body);
+      const influencer = await storage.createInfluencer(data);
+      res.status(201).json(influencer);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al crear influencer" });
+    }
+  });
+  
+  // Obtener influencias para una canción
+  app.get("/api/songs/:songId/influences", async (req, res) => {
+    try {
+      const songId = parseInt(req.params.songId);
+      const influences = await storage.getSongInfluences(songId);
+      res.json(influences);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener influencias" });
+    }
+  });
+  
+  // Crear una relación de influencia para una canción (solo admin)
+  app.post("/api/songs/:songId/influences", async (req, res) => {
+    if (!req.isAuthenticated?.() || !req.user.isAdmin) {
+      return res.status(403).json({ message: "No autorizado" });
+    }
+    
+    try {
+      const songId = parseInt(req.params.songId);
+      const data = songInfluenceSchema.parse({
+        ...req.body,
+        songId
+      });
+      
+      const influence = await storage.createSongInfluence(data);
+      res.status(201).json(influence);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al crear influencia" });
+    }
+  });
+  
+  // ===== SISTEMA "RED CHALLENGES" =====
+  
+  // Obtener todos los challenges (con filtro opcional)
+  app.get("/api/challenges", async (req, res) => {
+    try {
+      const { status, category } = req.query;
+      
+      const filter: {status?: string; category?: string} = {};
+      if (status) filter.status = status as string;
+      if (category) filter.category = category as string;
+      
+      const challenges = await storage.getChallenges(filter);
+      res.json(challenges);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener challenges" });
+    }
+  });
+  
+  // Obtener un challenge específico
+  app.get("/api/challenges/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const challenge = await storage.getChallenge(id);
+      
+      if (challenge) {
+        res.json(challenge);
+      } else {
+        res.status(404).json({ message: "Challenge no encontrado" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener challenge" });
+    }
+  });
+  
+  // Crear un nuevo challenge (solo admin)
+  app.post("/api/challenges", async (req, res) => {
+    if (!req.isAuthenticated?.() || !req.user.isAdmin) {
+      return res.status(403).json({ message: "No autorizado" });
+    }
+    
+    try {
+      const data = challengeSchema.parse(req.body);
+      const challenge = await storage.createChallenge(data);
+      res.status(201).json(challenge);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al crear challenge" });
+    }
+  });
+  
+  // Actualizar un challenge (solo admin)
+  app.patch("/api/challenges/:id", async (req, res) => {
+    if (!req.isAuthenticated?.() || !req.user.isAdmin) {
+      return res.status(403).json({ message: "No autorizado" });
+    }
+    
+    try {
+      const id = parseInt(req.params.id);
+      const updatedChallenge = await storage.updateChallenge(id, req.body);
+      res.json(updatedChallenge);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al actualizar challenge" });
+    }
+  });
+  
+  // Obtener todas las entradas de un challenge
+  app.get("/api/challenges/:id/entries", async (req, res) => {
+    try {
+      const challengeId = parseInt(req.params.id);
+      const entries = await storage.getChallengeEntries(challengeId);
+      res.json(entries);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener entradas" });
+    }
+  });
+  
+  // Obtener una entrada específica
+  app.get("/api/challenge-entries/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const entry = await storage.getChallengeEntry(id);
+      
+      if (entry) {
+        res.json(entry);
+      } else {
+        res.status(404).json({ message: "Entrada no encontrada" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener entrada" });
+    }
+  });
+  
+  // Obtener las entradas del usuario actual
+  app.get("/api/challenge-entries/user/me", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const entries = await storage.getUserChallengeEntries(req.user.id);
+      res.json(entries);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener entradas" });
+    }
+  });
+  
+  // Crear una nueva entrada para un challenge
+  app.post("/api/challenges/:id/entries", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const challengeId = parseInt(req.params.id);
+      const challenge = await storage.getChallenge(challengeId);
+      
+      // Verificar si el challenge existe y está activo
+      if (!challenge || challenge.status !== "active") {
+        return res.status(404).json({ message: "Challenge no encontrado o no está activo" });
+      }
+      
+      const data = challengeEntrySchema.parse({
+        ...req.body,
+        challengeId,
+        userId: req.user.id,
+        status: "pending" // Por defecto, las entradas nuevas están pendientes de aprobación
+      });
+      
+      const entry = await storage.createChallengeEntry(data);
+      res.status(201).json(entry);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al crear entrada" });
+    }
+  });
+  
+  // Actualizar una entrada
+  app.patch("/api/challenge-entries/:id", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const id = parseInt(req.params.id);
+      const entry = await storage.getChallengeEntry(id);
+      
+      // Verificar si la entrada existe y pertenece al usuario (a menos que sea admin)
+      if (!entry || (entry.userId !== req.user.id && !req.user.isAdmin)) {
+        return res.status(404).json({ message: "Entrada no encontrada o no tienes permiso para editarla" });
+      }
+      
+      // Los usuarios normales solo pueden editar entradas pendientes
+      if (entry.userId === req.user.id && entry.status !== "pending" && !req.user.isAdmin) {
+        return res.status(403).json({ message: "Solo puedes editar entradas que estén en estado pendiente" });
+      }
+      
+      const updatedEntry = await storage.updateChallengeEntry(id, req.body);
+      res.json(updatedEntry);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Datos inválidos", errors: (error as z.ZodError).errors });
+      }
+      res.status(500).json({ message: "Error al actualizar entrada" });
+    }
+  });
+  
+  // Votar por una entrada
+  app.post("/api/challenge-entries/:id/vote", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const entryId = parseInt(req.params.id);
+      const entry = await storage.getChallengeEntry(entryId);
+      
+      if (!entry) {
+        return res.status(404).json({ message: "Entrada no encontrada" });
+      }
+      
+      // Verificar que el challenge esté en modo de votación
+      const challenge = await storage.getChallenge(entry.challengeId);
+      if (!challenge || challenge.status !== "voting") {
+        return res.status(400).json({ message: "Este challenge no está en fase de votación actualmente" });
+      }
+      
+      // No se puede votar por entradas propias
+      if (entry.userId === req.user.id) {
+        return res.status(403).json({ message: "No puedes votar por tus propias entradas" });
+      }
+      
+      // Verificar que la entrada esté aprobada
+      if (entry.status !== "approved") {
+        return res.status(400).json({ message: "Esta entrada no está disponible para votación" });
+      }
+      
+      const result = await storage.voteChallengeEntry(req.user.id, entryId);
+      
+      if (result) {
+        res.json({ success: true, message: "Voto registrado correctamente" });
+      } else {
+        res.status(400).json({ message: "Ya has votado por esta entrada" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Error al votar por la entrada" });
+    }
+  });
+  
+  // Obtener las entradas por las que ha votado el usuario
+  app.get("/api/challenge-entries/votes/me", async (req, res) => {
+    if (!req.isAuthenticated?.()) {
+      return res.status(401).json({ message: "No autenticado" });
+    }
+    
+    try {
+      const votedEntryIds = await storage.getVotedEntries(req.user.id);
+      res.json(votedEntryIds);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener votos" });
     }
   });
 
