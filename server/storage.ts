@@ -152,11 +152,11 @@ export class MemStorage implements IStorage {
     console.log('Initializing demo data...');
     // Releases
     this.createRelease({
-      title: "SANGRE Y FUEGO",
+      title: "TRAP MAFIA",
       type: "Álbum",
       year: "2023",
       tracks: 12,
-      description: "Nuestro álbum debut que captura la esencia cruda y poderosa del metal latino. Una fusión única de agresividad y pasión.",
+      description: "Nuestro álbum debut que fusiona el trap latino con sonidos únicos. Beats pesados y letras que cuentan historias de la calle.",
       coverImage: "/assets/rh.jpeg",
       audioFiles: [
         "https://p.scdn.co/mp3-preview/2f1888daa2c9fb0e0f795974a458d0ae1d21df54",
@@ -164,18 +164,18 @@ export class MemStorage implements IStorage {
         "https://p.scdn.co/mp3-preview/df2b5f123d4624a7f62c1765e59d1cd8435a3477"
       ],
       trackTitles: [
-        "Puño de Hierro",
-        "Noches Sangrientas",
-        "Fuego en las Calles",
-        "Reina de la Noche",
-        "Sombras del Pasado",
-        "Alma de Metal",
-        "Guerreros del Sur",
-        "Herederos del Fuego",
-        "Sangre en las Venas",
-        "Código de Honor",
-        "Legado Eterno",
-        "Llamas de Libertad"
+        "ALV Las Fresas",
+        "Trap Mode",
+        "Mafia Life",
+        "Dinero y Poder",
+        "En La Calle",
+        "No Hay Rival",
+        "Lifestyle",
+        "Red Gang",
+        "Trap Latino",
+        "Mi Territorio",
+        "La Familia",
+        "Red Mafia Anthem"
       ]
     });
 
@@ -184,33 +184,33 @@ export class MemStorage implements IStorage {
       type: "Single",
       year: "2024",
       tracks: 1,
-      description: "Nuestro nuevo single que fusiona la agresividad del metal con ritmos latinos y letras provocativas.",
+      description: "Nuestro hit viral que combina trap con un flow único y letras que han revolucionado la escena urbana.",
       coverImage: "https://i.scdn.co/image/ab67616d0000b273d8601e7e6ede248c1bf8c662",
       audioFiles: ["https://p.scdn.co/mp3-preview/your-preview-url-here"],
       trackTitles: ["ALV Las Fresas"]
     });
 
     this.createRelease({
-      title: "FURY UNLEASHED",
+      title: "TRAP KING",
       type: "Single",
       year: "2024",
       tracks: 1,
-      description: "Nuestro más reciente single que marca una evolución en nuestro sonido, fusionando la agresividad del metal con elementos sinfónicos.",
+      description: "El single que define el nuevo sonido del trap latino, con beats hipnóticos y un flow que no podrás sacar de tu cabeza.",
       coverImage: "/assets/imagen_1743454510922.png",
       audioFiles: [
         "https://p.scdn.co/mp3-preview/df2b5f123d4624a7f62c1765e59d1cd8435a3477"
       ],
       trackTitles: [
-        "Fury Unleashed"
+        "Trap King"
       ]
     });
 
     this.createRelease({
-      title: "HELLBOUND",
+      title: "STREET LIFE",
       type: "EP",
       year: "2023",
       tracks: 5,
-      description: "Una colección de canciones que rinden homenaje a nuestros orígenes y primeras influencias.",
+      description: "Una colección de tracks que muestran la esencia del trap y la vida en las calles. Beats duros y letras reales.",
       coverImage: "https://images.unsplash.com/photo-1504509546545-e000b4a62425?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
       audioFiles: [
         "https://cdn.pixabay.com/download/audio/2022/01/20/audio_1faf8d7bbd.mp3",
