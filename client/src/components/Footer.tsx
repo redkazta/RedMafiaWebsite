@@ -65,7 +65,7 @@ export default function Footer() {
             <div className="flex items-center mb-6 relative">
               <div className="h-20 w-auto overflow-hidden red-mafia-glow bg-[#ff0000]/10 p-2 rounded-md border border-[#ff0000]/20 shadow-lg group">
                 <img 
-                  src="/assets/rh.jpeg" 
+                  src="/logo.jpeg" 
                   alt="Red Mafia" 
                   className="h-full w-auto object-contain drop-shadow-[0_0_5px_rgba(255,0,0,0.5)] transition-all duration-700 group-hover:scale-110" 
                 />
