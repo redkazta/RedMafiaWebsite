@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface SpotifyPlayerProps {
   playlistId?: string;
@@ -8,6 +8,7 @@ interface SpotifyPlayerProps {
   width?: number | string;
   height?: number | string;
   className?: string;
+  mini?: boolean; // Added mini prop
 }
 
 export default function SpotifyPlayer({
@@ -17,11 +18,12 @@ export default function SpotifyPlayer({
   artistId,
   width = '100%',
   height = 352,
-  className = ''
+  className = '',
+  mini = false, // Added mini prop
 }: SpotifyPlayerProps) {
   // Construir la URL basada en el tipo de contenido
   let url = '';
-  
+
   if (playlistId) {
     url = `https://open.spotify.com/embed/playlist/${playlistId}`;
   } else if (trackId) {
@@ -31,9 +33,19 @@ export default function SpotifyPlayer({
   } else if (artistId) {
     url = `https://open.spotify.com/embed/artist/${artistId}`;
   }
-  
+
   if (!url) return null;
-  
+
+  useEffect(() => {
+    if (trackId) {
+      // Dispatch event when track changes
+      const event = new CustomEvent('trackChange', { 
+        detail: { trackId } 
+      });
+      window.dispatchEvent(event);
+    }
+  }, [trackId]);
+
   return (
     <div className={`spotify-player-container ${className}`}>
       <iframe 

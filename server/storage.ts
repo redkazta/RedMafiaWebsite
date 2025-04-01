@@ -20,37 +20,37 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
+
   // Releases
   getReleases(): Promise<Release[]>;
   getRelease(id: number): Promise<Release | undefined>;
   createRelease(release: InsertRelease): Promise<Release>;
-  
+
   // Concerts
   getConcerts(): Promise<Concert[]>;
   getConcert(id: number): Promise<Concert | undefined>;
   createConcert(concert: InsertConcert): Promise<Concert>;
-  
+
   // News
   getAllNews(): Promise<News[]>;
   getNewsItem(id: number): Promise<News | undefined>;
   createNewsItem(newsItem: InsertNews): Promise<News>;
-  
+
   // Gallery
   getGalleryItems(): Promise<GalleryItem[]>;
   getGalleryItem(id: number): Promise<GalleryItem | undefined>;
   createGalleryItem(item: InsertGalleryItem): Promise<GalleryItem>;
-  
+
   // Contact
   createContactMessage(message: InsertContact): Promise<Contact>;
-  
+
   // Membresía "La Familia"
   getMemberships(): Promise<Membership[]>;
   getMembershipByUserId(userId: number): Promise<Membership | undefined>;
   createMembership(membership: InsertMembership): Promise<Membership>;
   updateMembership(id: number, data: Partial<InsertMembership>): Promise<Membership>;
   updateStripeInfo(userId: number, stripeCustomerId: string, stripeSubscriptionId: string): Promise<Membership>;
-  
+
   // Diseño de Merch
   getMerchDesigns(filter?: {category?: string; status?: string}): Promise<MerchDesign[]>;
   getMerchDesign(id: number): Promise<MerchDesign | undefined>;
@@ -59,14 +59,14 @@ export interface IStorage {
   updateMerchDesign(id: number, data: Partial<InsertMerchDesign>): Promise<MerchDesign>;
   voteMerchDesign(userId: number, designId: number): Promise<boolean>;
   getVotedDesigns(userId: number): Promise<number[]>;
-  
+
   // Influencias Musicales
   getInfluencers(): Promise<Influencer[]>;
   getInfluencer(id: number): Promise<Influencer | undefined>;
   createInfluencer(influencer: InsertInfluencer): Promise<Influencer>;
   getSongInfluences(songId: number): Promise<SongInfluence[]>;
   createSongInfluence(influence: InsertSongInfluence): Promise<SongInfluence>;
-  
+
   // Red Challenges
   getChallenges(filter?: {status?: string; category?: string}): Promise<Challenge[]>;
   getChallenge(id: number): Promise<Challenge | undefined>;
@@ -96,7 +96,7 @@ export class MemStorage implements IStorage {
   private challenges: Map<number, Challenge>;
   private challengeEntries: Map<number, ChallengeEntry>;
   private challengeVotes: Map<number, ChallengeVote>;
-  
+
   private nextUserId: number;
   private nextReleaseId: number;
   private nextConcertId: number;
@@ -127,7 +127,7 @@ export class MemStorage implements IStorage {
     this.challenges = new Map();
     this.challengeEntries = new Map();
     this.challengeVotes = new Map();
-    
+
     this.nextUserId = 1;
     this.nextReleaseId = 1;
     this.nextConcertId = 1;
@@ -142,7 +142,7 @@ export class MemStorage implements IStorage {
     this.nextChallengeId = 1;
     this.nextChallengeEntryId = 1;
     this.nextChallengeVoteId = 1;
-    
+
     // Inicializar datos demo
     this.initDemoData();
   }
@@ -178,7 +178,7 @@ export class MemStorage implements IStorage {
         "Llamas de Libertad"
       ]
     });
-    
+
     this.createRelease({
       title: "ALV LAS FRESAS",
       type: "Single",
@@ -204,7 +204,7 @@ export class MemStorage implements IStorage {
         "Fury Unleashed"
       ]
     });
-    
+
     this.createRelease({
       title: "HELLBOUND",
       type: "EP",
@@ -223,7 +223,7 @@ export class MemStorage implements IStorage {
         "La Caída"
       ]
     });
-    
+
     // Concerts
     this.createConcert({
       title: "FESTIVAL ROCK EN ROJO",
@@ -235,7 +235,7 @@ export class MemStorage implements IStorage {
       start: "21:00",
       tags: ["Principal", "Nuevo álbum"]
     });
-    
+
     this.createConcert({
       title: "GIRA SANGRE Y FUEGO",
       date: "22",
@@ -246,7 +246,7 @@ export class MemStorage implements IStorage {
       start: "20:30",
       tags: ["Gira nacional"]
     });
-    
+
     this.createConcert({
       title: "RED MAFIA UNPLUGGED",
       date: "05",
@@ -257,68 +257,71 @@ export class MemStorage implements IStorage {
       start: "20:00",
       tags: ["Acústico", "Especial"]
     });
-    
+
     // News
     this.createNewsItem({
-      title: "RED MAFIA ANUNCIA GIRA INTERNACIONAL PARA 2024",
+      title: "RED MAFIA ANUNCIA GIRA POR TODA LA REPÚBLICA",
       category: "ANUNCIO",
       date: "15 Mayo, 2023",
-      content: "La banda mexicana comenzará su primera gira internacional abarcando más de 15 países en Latinoamérica y Europa.",
+      author: "Emiliano García Gutiérrez",
+      content: "Desde sus orígenes en las calles de Guadalajara hasta los escenarios más importantes del país, Red Mafia anuncia su gira más ambiciosa hasta la fecha. El tour comenzará en el Teatro Diana y seguirá por 20 ciudades, llevando el sonido único de 'ALV Las Fresas' y otros éxitos a todo México.",
       image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createNewsItem({
-      title: "COLABORACIÓN SORPRESA CON ARTISTA INTERNACIONAL",
+      title: "FURY UNLEASHED: LA NUEVA ERA DE RED MAFIA",
       category: "MÚSICA",
       date: "28 Abril, 2023",
-      content: "Red Mafia anuncia una colaboración sorpresa que promete revolucionar la escena musical latina.",
+      author: "Emiliano García Gutiérrez",
+      content: "Grabado en los históricos estudios de la Colonia Americana en Guadalajara, 'Fury Unleashed' marca un nuevo capítulo en la evolución de Red Mafia. La canción combina la agresividad característica de la banda con elementos del folklore jalisciense, creando un sonido único que rinde homenaje a sus raíces.",
       image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createNewsItem({
-      title: "ENTREVISTA EXCLUSIVA: EL PROCESO CREATIVO DE \"SANGRE Y FUEGO\"",
+      title: "ALV LAS FRESAS: LA HISTORIA DETRÁS DEL ÉXITO",
       category: "ENTREVISTA",
       date: "10 Abril, 2023",
-      content: "Conversamos con la banda sobre las inspiraciones y desafíos detrás de su nuevo álbum.",
+      author: "Emiliano García Gutiérrez",
+      content: "En una entrevista exclusiva desde el barrio de Providencia en Guadalajara, la banda revela cómo su último sencillo 'ALV Las Fresas' nació de sus experiencias en la escena underground de la ciudad y se convirtió en un himno de la nueva generación del rock mexicano.",
       image: "https://images.unsplash.com/photo-1453738773917-9c3eff1db985?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     // Gallery
     this.createGalleryItem({
       title: "Concierto Auditorio Nacional",
       image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createGalleryItem({
       title: "Backstage - Gira 2022",
       image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createGalleryItem({
       title: "Sesión de grabación - Nuevo álbum",
       image: "https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createGalleryItem({
       title: "Fans en Festival Rock en Rojo",
       image: "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createGalleryItem({
       title: "Escenario - Tour Sangre y Fuego",
       image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createGalleryItem({
       title: "Ensayo previo a gira",
       image: "https://images.unsplash.com/photo-1614153733626-ed28a8b73cb2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createGalleryItem({
       title: "Sesión fotográfica - Prensa",
       image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
     });
-    
+
     this.createGalleryItem({
       title: "Entrevista para Canal Music+",
       image: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
@@ -342,16 +345,16 @@ export class MemStorage implements IStorage {
     this.users.set(id, user);
     return user;
   }
-  
+
   // Releases
   async getReleases(): Promise<Release[]> {
     return [...this.releases.values()];
   }
-  
+
   async getRelease(id: number): Promise<Release | undefined> {
     return this.releases.get(id);
   }
-  
+
   async createRelease(insertRelease: InsertRelease): Promise<Release> {
     const id = this.nextReleaseId++;
     const now = new Date();
@@ -359,16 +362,16 @@ export class MemStorage implements IStorage {
     this.releases.set(id, release);
     return release;
   }
-  
+
   // Concerts
   async getConcerts(): Promise<Concert[]> {
     return [...this.concerts.values()];
   }
-  
+
   async getConcert(id: number): Promise<Concert | undefined> {
     return this.concerts.get(id);
   }
-  
+
   async createConcert(insertConcert: InsertConcert): Promise<Concert> {
     const id = this.nextConcertId++;
     const now = new Date();
@@ -376,16 +379,16 @@ export class MemStorage implements IStorage {
     this.concerts.set(id, concert);
     return concert;
   }
-  
+
   // News
   async getAllNews(): Promise<News[]> {
     return [...this.newsItems.values()];
   }
-  
+
   async getNewsItem(id: number): Promise<News | undefined> {
     return this.newsItems.get(id);
   }
-  
+
   async createNewsItem(insertNews: InsertNews): Promise<News> {
     const id = this.nextNewsId++;
     const now = new Date();
@@ -393,16 +396,16 @@ export class MemStorage implements IStorage {
     this.newsItems.set(id, newsItem);
     return newsItem;
   }
-  
+
   // Gallery
   async getGalleryItems(): Promise<GalleryItem[]> {
     return [...this.galleryItems.values()];
   }
-  
+
   async getGalleryItem(id: number): Promise<GalleryItem | undefined> {
     return this.galleryItems.get(id);
   }
-  
+
   async createGalleryItem(insertGalleryItem: InsertGalleryItem): Promise<GalleryItem> {
     const id = this.nextGalleryId++;
     const now = new Date();
@@ -410,7 +413,7 @@ export class MemStorage implements IStorage {
     this.galleryItems.set(id, galleryItem);
     return galleryItem;
   }
-  
+
   // Contact
   async createContactMessage(insertContact: InsertContact): Promise<Contact> {
     const id = this.nextContactId++;
@@ -419,18 +422,18 @@ export class MemStorage implements IStorage {
     this.contactMessages.set(id, contactMessage);
     return contactMessage;
   }
-  
+
   // Membresía "La Familia"
   async getMemberships(): Promise<Membership[]> {
     return [...this.memberships.values()];
   }
-  
+
   async getMembershipByUserId(userId: number): Promise<Membership | undefined> {
     return Array.from(this.memberships.values()).find(
       (membership) => membership.userId === userId,
     );
   }
-  
+
   async createMembership(insertMembership: InsertMembership): Promise<Membership> {
     const id = this.nextMembershipId++;
     const now = new Date();
@@ -443,13 +446,13 @@ export class MemStorage implements IStorage {
     this.memberships.set(id, membership);
     return membership;
   }
-  
+
   async updateMembership(id: number, data: Partial<InsertMembership>): Promise<Membership> {
     const membership = this.memberships.get(id);
     if (!membership) {
       throw new Error(`Membresía con ID ${id} no encontrada.`);
     }
-    
+
     const now = new Date();
     const updatedMembership: Membership = {
       ...membership,
@@ -459,16 +462,16 @@ export class MemStorage implements IStorage {
     this.memberships.set(id, updatedMembership);
     return updatedMembership;
   }
-  
+
   async updateStripeInfo(userId: number, stripeCustomerId: string, stripeSubscriptionId: string): Promise<Membership> {
     const membership = Array.from(this.memberships.values()).find(
       (m) => m.userId === userId,
     );
-    
+
     if (!membership) {
       throw new Error(`Membresía para usuario ${userId} no encontrada.`);
     }
-    
+
     const now = new Date();
     const updatedMembership: Membership = {
       ...membership,
@@ -479,34 +482,34 @@ export class MemStorage implements IStorage {
     this.memberships.set(membership.id, updatedMembership);
     return updatedMembership;
   }
-  
+
   // Diseño de Merch
   async getMerchDesigns(filter?: {category?: string; status?: string}): Promise<MerchDesign[]> {
     let designs = [...this.merchDesigns.values()];
-    
+
     if (filter) {
       if (filter.category) {
         designs = designs.filter((design) => design.category === filter.category);
       }
-      
+
       if (filter.status) {
         designs = designs.filter((design) => design.status === filter.status);
       }
     }
-    
+
     return designs;
   }
-  
+
   async getMerchDesign(id: number): Promise<MerchDesign | undefined> {
     return this.merchDesigns.get(id);
   }
-  
+
   async getMerchDesignsByUser(userId: number): Promise<MerchDesign[]> {
     return Array.from(this.merchDesigns.values()).filter(
       (design) => design.userId === userId,
     );
   }
-  
+
   async createMerchDesign(insertDesign: InsertMerchDesign): Promise<MerchDesign> {
     const id = this.nextMerchDesignId++;
     const now = new Date();
@@ -520,13 +523,13 @@ export class MemStorage implements IStorage {
     this.merchDesigns.set(id, design);
     return design;
   }
-  
+
   async updateMerchDesign(id: number, data: Partial<InsertMerchDesign>): Promise<MerchDesign> {
     const design = this.merchDesigns.get(id);
     if (!design) {
       throw new Error(`Diseño con ID ${id} no encontrado.`);
     }
-    
+
     const now = new Date();
     const updatedDesign: MerchDesign = {
       ...design,
@@ -536,17 +539,17 @@ export class MemStorage implements IStorage {
     this.merchDesigns.set(id, updatedDesign);
     return updatedDesign;
   }
-  
+
   async voteMerchDesign(userId: number, designId: number): Promise<boolean> {
     // Verificar si el usuario ya votó por este diseño
     const existingVote = Array.from(this.merchVotes.values()).find(
       (vote) => vote.userId === userId && vote.designId === designId,
     );
-    
+
     if (existingVote) {
       return false; // Usuario ya votó por este diseño
     }
-    
+
     // Crear nuevo voto
     const vote: MerchVote = {
       id: this.nextMerchVoteId++,
@@ -555,32 +558,32 @@ export class MemStorage implements IStorage {
       createdAt: new Date()
     };
     this.merchVotes.set(vote.id, vote);
-    
+
     // Incrementar contador de votos en el diseño
     const design = this.merchDesigns.get(designId);
     if (design) {
       design.votes += 1;
       this.merchDesigns.set(designId, design);
     }
-    
+
     return true;
   }
-  
+
   async getVotedDesigns(userId: number): Promise<number[]> {
     return Array.from(this.merchVotes.values())
       .filter((vote) => vote.userId === userId)
       .map((vote) => vote.designId);
   }
-  
+
   // Influencias Musicales
   async getInfluencers(): Promise<Influencer[]> {
     return [...this.influencers.values()];
   }
-  
+
   async getInfluencer(id: number): Promise<Influencer | undefined> {
     return this.influencers.get(id);
   }
-  
+
   async createInfluencer(insertInfluencer: InsertInfluencer): Promise<Influencer> {
     const id = this.nextInfluencerId++;
     const now = new Date();
@@ -592,13 +595,13 @@ export class MemStorage implements IStorage {
     this.influencers.set(id, influencer);
     return influencer;
   }
-  
+
   async getSongInfluences(songId: number): Promise<SongInfluence[]> {
     return Array.from(this.songInfluences.values()).filter(
       (influence) => influence.songId === songId,
     );
   }
-  
+
   async createSongInfluence(insertInfluence: InsertSongInfluence): Promise<SongInfluence> {
     const id = this.nextSongInfluenceId++;
     const now = new Date();
@@ -610,28 +613,28 @@ export class MemStorage implements IStorage {
     this.songInfluences.set(id, influence);
     return influence;
   }
-  
+
   // Red Challenges
   async getChallenges(filter?: {status?: string; category?: string}): Promise<Challenge[]> {
     let challenges = [...this.challenges.values()];
-    
+
     if (filter) {
       if (filter.status) {
         challenges = challenges.filter((challenge) => challenge.status === filter.status);
       }
-      
+
       if (filter.category) {
         challenges = challenges.filter((challenge) => challenge.category === filter.category);
       }
     }
-    
+
     return challenges;
   }
-  
+
   async getChallenge(id: number): Promise<Challenge | undefined> {
     return this.challenges.get(id);
   }
-  
+
   async createChallenge(insertChallenge: InsertChallenge): Promise<Challenge> {
     const id = this.nextChallengeId++;
     const now = new Date();
@@ -644,13 +647,13 @@ export class MemStorage implements IStorage {
     this.challenges.set(id, challenge);
     return challenge;
   }
-  
+
   async updateChallenge(id: number, data: Partial<InsertChallenge>): Promise<Challenge> {
     const challenge = this.challenges.get(id);
     if (!challenge) {
       throw new Error(`Challenge con ID ${id} no encontrado.`);
     }
-    
+
     const now = new Date();
     const updatedChallenge: Challenge = {
       ...challenge,
@@ -660,23 +663,23 @@ export class MemStorage implements IStorage {
     this.challenges.set(id, updatedChallenge);
     return updatedChallenge;
   }
-  
+
   async getChallengeEntries(challengeId: number): Promise<ChallengeEntry[]> {
     return Array.from(this.challengeEntries.values()).filter(
       (entry) => entry.challengeId === challengeId,
     );
   }
-  
+
   async getChallengeEntry(id: number): Promise<ChallengeEntry | undefined> {
     return this.challengeEntries.get(id);
   }
-  
+
   async getUserChallengeEntries(userId: number): Promise<ChallengeEntry[]> {
     return Array.from(this.challengeEntries.values()).filter(
       (entry) => entry.userId === userId,
     );
   }
-  
+
   async createChallengeEntry(insertEntry: InsertChallengeEntry): Promise<ChallengeEntry> {
     const id = this.nextChallengeEntryId++;
     const now = new Date();
@@ -689,13 +692,13 @@ export class MemStorage implements IStorage {
     this.challengeEntries.set(id, entry);
     return entry;
   }
-  
+
   async updateChallengeEntry(id: number, data: Partial<InsertChallengeEntry>): Promise<ChallengeEntry> {
     const entry = this.challengeEntries.get(id);
     if (!entry) {
       throw new Error(`Entry con ID ${id} no encontrada.`);
     }
-    
+
     const updatedEntry: ChallengeEntry = {
       ...entry,
       ...data
@@ -703,17 +706,17 @@ export class MemStorage implements IStorage {
     this.challengeEntries.set(id, updatedEntry);
     return updatedEntry;
   }
-  
+
   async voteChallengeEntry(userId: number, entryId: number): Promise<boolean> {
     // Verificar si el usuario ya votó por esta entrada
     const existingVote = Array.from(this.challengeVotes.values()).find(
       (vote) => vote.userId === userId && vote.entryId === entryId,
     );
-    
+
     if (existingVote) {
       return false; // Usuario ya votó por esta entrada
     }
-    
+
     // Crear nuevo voto
     const vote: ChallengeVote = {
       id: this.nextChallengeVoteId++,
@@ -722,17 +725,17 @@ export class MemStorage implements IStorage {
       createdAt: new Date()
     };
     this.challengeVotes.set(vote.id, vote);
-    
+
     // Incrementar contador de votos en la entrada
     const entry = this.challengeEntries.get(entryId);
     if (entry) {
       entry.votes += 1;
       this.challengeEntries.set(entryId, entry);
     }
-    
+
     return true;
   }
-  
+
   async getVotedEntries(userId: number): Promise<number[]> {
     return Array.from(this.challengeVotes.values())
       .filter((vote) => vote.userId === userId)
