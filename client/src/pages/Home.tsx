@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import HeroSection from "@/components/HeroSection";
+import { usePlayerStore } from "@/store/player";
 import ReleasesSection from "@/components/ReleasesSection";
 import NewsSection from "@/components/NewsSection";
 import ConcertsSection from "@/components/ConcertsSection";
