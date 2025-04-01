@@ -69,10 +69,11 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative h-[85vh] flex items-center bg-black text-white overflow-hidden">
+        <div className="absolute inset-0 bg-black/70 z-0"></div>
         <div 
           className="absolute inset-0 bg-cover bg-center z-0 opacity-40"
           style={{ 
-            backgroundImage: "url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')" 
+            backgroundImage: "url('/assets/rh.jpeg')" 
           }}
         ></div>
         <div className="absolute inset-0 bg-black/70 z-5"></div>
@@ -138,7 +139,7 @@ export default function Home() {
                   <img 
                     src="https://i.scdn.co/image/ab67616d00001e02b1c42b76dc1fd933bb8f25e8" 
                     alt="ALV LAS FRESAS - Zackly"
-                    className="w-full h-auto rounded-lg shadow-lg transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-[400px] object-cover rounded-lg shadow-lg transition-transform duration-700 group-hover:scale-105"
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
