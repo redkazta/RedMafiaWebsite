@@ -166,16 +166,16 @@ export default function Home() {
                     <Music size={14} />
                     <span>ÚLTIMO LANZAMIENTO</span>
                   </div>
-                  <h3 className="text-5xl font-bold text-[#FF0000] mb-4 red-mafia-title">{releases[0].title}</h3>
+                  <h3 className="text-5xl font-bold text-[#FF0000] mb-4 red-mafia-title">ALV LAS FRESAS</h3>
                   <div className="flex items-center gap-4 text-[#F5F5F5]/70 mb-6 text-sm">
-                    <span className="bg-[#2A0A0A] px-3 py-1 rounded-full">{releases[0].type}</span>
+                    <span className="bg-[#2A0A0A] px-3 py-1 rounded-full">Sencillo</span>
                     <span>•</span>
-                    <span>{releases[0].year}</span>
+                    <span>2024</span>
                     <span>•</span>
-                    <span>{releases[0].tracks} pistas</span>
+                    <span>1 pista</span>
                   </div>
                   <p className="text-[#F5F5F5] text-lg leading-relaxed mb-8 border-l-2 border-[#950101] pl-4">
-                    {releases[0].description}
+                    El nuevo sencillo de Zackly - ALV LAS FRESAS, disponible ahora en todas las plataformas.
                   </p>
                 </div>
 
