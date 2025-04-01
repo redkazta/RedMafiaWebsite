@@ -114,13 +114,13 @@ export default function Navbar() {
           <div className="h-20 md:h-28 w-auto overflow-hidden relative">
             <div className="absolute inset-0 bg-[#FF0000]/10 rounded-lg blur-md opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
             <img 
-              src="/assets/rh.jpeg" 
+              src="/logo.jpeg" 
               alt="Red Mafia" 
               className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" 
             />
           </div>
           
-          <div className="ml-4 relative hidden md:block">
+          <div className="ml-16 relative hidden md:block">
             {/* Efecto de brillo detrás del texto */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#FF0000]/5 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
