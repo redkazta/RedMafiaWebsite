@@ -242,11 +242,35 @@ export default function Home() {
             </div>
             
             <div className="mt-4 md:mt-0">
+              <div className="w-full max-w-4xl mx-auto mt-8">
+                <SpotifyPlayer
+                  trackId="CHANTE2ID"
+                  height={80}
+                  className="mb-4"
+                />
+                <div className="grid gap-4">
+                  {["CHANTE 2", "Puño de Hierro", "Noches Sangrientas", "Fuego en las Calles"].map((song, index) => (
+                    <div key={index} 
+                      className="bg-[#950101]/10 p-4 rounded-lg border border-[#950101]/30 hover:border-[#950101] transition-all group relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#950101]/0 via-[#950101]/5 to-[#950101]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-[#950101]/20 rounded-full flex items-center justify-center">
+                          <Music className="w-6 h-6 text-[#950101]" />
+                        </div>
+                        <div>
+                          <h3 className="text-white font-bold">{song}</h3>
+                          <p className="text-[#F5F5F5]/70 text-sm">RED MAFIA</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
               <a 
                 href="https://open.spotify.com/playlist/3ojUCBn2gpPULJ9U6FjQIB" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group bg-[#1DB954] hover:bg-[#1ED760] transition-all duration-300 px-5 py-2.5 rounded-md text-white inline-flex items-center font-medium"
+                className="group bg-[#1DB954] hover:bg-[#1ED760] transition-all duration-300 px-5 py-2.5 rounded-md text-white inline-flex items-center font-medium mt-6"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2">
                   <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.2.317-.667.434-1.021.217-2.799-1.7-6.313-2.082-10.449-1.14-.398.092-.8-.16-.892-.559-.92-.398.16-.8.559-.892 4.54-1.037 8.42-.594 11.586 1.354.353.215.471.691.217 1.02zm1.225-2.726c-.242.391-.775.535-1.166.293-3.209-1.97-8.093-2.538-11.882-1.389-.491.154-1.012-.12-1.166-.611-.153-.491.12-1.013.611-1.166 4.343-1.318 9.745-.682 13.479 1.583.391.241.533.773.293 1.165l-.169.125zm.11-2.835c-.202.331-.65.492-.98.29-.38-.202-.492-.65-.29-.98.2-.331.649-.493.979-.29.38.202.494.649.291.98z" />

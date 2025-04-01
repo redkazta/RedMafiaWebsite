@@ -45,9 +45,9 @@ export default function Logo({
       >
         <div className={`relative ${sizes[size]} transition-transform duration-500 hover:scale-110`}>
           <img
-            src="/assets/imagen_1743454510922.png"
+            src="/logo.jpeg"
             alt="RED MAFIA Logo"
-            className="w-full h-auto object-contain drop-shadow-red"
+            className="w-full h-auto object-contain drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]"
           />
         </div>
         
