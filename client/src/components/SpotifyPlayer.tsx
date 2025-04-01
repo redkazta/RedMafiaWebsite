@@ -1,4 +1,6 @@
-import React from 'react';
+
+import React, { useEffect } from 'react';
+import { usePlayerStore } from '@/store/player';
 
 interface SpotifyPlayerProps {
   trackId?: string;
@@ -8,24 +10,35 @@ interface SpotifyPlayerProps {
   className?: string;
   theme?: string;
   view?: 'minimal' | 'compact' | 'standard';
+  autoPlay?: boolean;
 }
 
 export default function SpotifyPlayer({
-  trackId,
+  trackId: propTrackId,
   albumId,
   width = '100%',
   height = 352,
   className = '',
   theme = '0',
-  view = 'standard'
+  view = 'standard',
+  autoPlay = false
 }: SpotifyPlayerProps) {
-  // Construir la URL basada en el tipo de contenido
-  const contentId = trackId || albumId;
-  const contentType = trackId ? 'track' : 'album';
+  const { currentTrackId, setTrack } = usePlayerStore();
+  
+  // Si se proporciona un trackId como prop, actualizar el estado global
+  useEffect(() => {
+    if (propTrackId && propTrackId !== currentTrackId) {
+      setTrack(propTrackId);
+    }
+  }, [propTrackId]);
+
+  // Usar el trackId del estado global si no se proporciona uno como prop
+  const contentId = propTrackId || currentTrackId || albumId;
+  const contentType = albumId ? 'album' : 'track';
 
   if (!contentId) return null;
 
-  const url = `https://open.spotify.com/embed/${contentType}/${contentId}?utm_source=generator&theme=${theme}${view !== 'standard' ? '&view=' + view : ''}`;
+  const url = `https://open.spotify.com/embed/${contentType}/${contentId}?utm_source=generator&theme=${theme}${view !== 'standard' ? '&view=' + view : ''}${autoPlay ? '&autoplay=1' : ''}`;
 
   return (
     <iframe 

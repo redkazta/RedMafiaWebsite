@@ -10,7 +10,8 @@ import SpotifyPlayer from "@/components/SpotifyPlayer";
 import { useQuery } from '@tanstack/react-query';
 
 export default function Home() {
-  const { data: releases, isLoading: releasesLoading } = useQuery({
+  const { currentTrackId } = usePlayerStore();
+const { data: releases, isLoading: releasesLoading } = useQuery({
     queryKey: ['releases'],
     queryFn: async () => {
       const response = await fetch('/api/releases');
@@ -113,7 +114,6 @@ export default function Home() {
       {/* Mini Player */}
       <div className="fixed bottom-4 left-4 z-50">
         <SpotifyPlayer 
-          trackId="0LgauOCJwpPugwBRZhumCj"
           width={300}
           height={80}
           className="rounded-lg shadow-xl bg-black/90"
