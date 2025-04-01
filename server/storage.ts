@@ -151,43 +151,53 @@ export class MemStorage implements IStorage {
   private initDemoData() {
     // Releases
     this.createRelease({
-      title: "SANGRE Y FUEGO",
+      title: "RENEGADES",
       type: "Álbum",
       year: "2023",
-      tracks: 12,
-      description: "Nuestro último lanzamiento explora nuevas dimensiones sonoras mientras mantiene la esencia que nos caracteriza.",
-      coverImage: "https://images.unsplash.com/photo-1544656376-ffe19d4b7353?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+      tracks: 13,
+      description: "Nuestro álbum debut que captura la esencia cruda y poderosa del heavy metal moderno. Una explosión de energía y letras profundas.",
+      coverImage: "/assets/rh.jpeg",
       audioFiles: [
-        "https://cdn.pixabay.com/download/audio/2022/01/18/audio_b3d53de9e3.mp3",
-        "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3",
-        "https://cdn.pixabay.com/download/audio/2022/02/07/audio_d6ccf0249a.mp3"
+        "https://p.scdn.co/mp3-preview/2f1888daa2c9fb0e0f795974a458d0ae1d21df54",
+        "https://p.scdn.co/mp3-preview/9c11c16e4907b9c9ee31c8d70a702d4b92748de4",
+        "https://p.scdn.co/mp3-preview/df2b5f123d4624a7f62c1765e59d1cd8435a3477"
       ],
       trackTitles: [
-        "Puño de Hierro",
-        "Noches Sangrientas",
-        "Fuego en las Calles"
+        "The Awakening",
+        "Blood Warriors",
+        "Metal Revolution",
+        "Eternal Rage",
+        "Demon's Call",
+        "Night Stalkers",
+        "Thunder Road",
+        "Steel Warriors",
+        "Dark Symphony",
+        "Last Stand",
+        "Renegade Heart",
+        "Legacy of Fire",
+        "Immortal Dreams"
       ]
     });
     
     this.createRelease({
-      title: "NOCHE ETERNA",
-      type: "Sencillo",
-      year: "2023",
+      title: "FURY UNLEASHED",
+      type: "Single",
+      year: "2024",
       tracks: 1,
-      description: "Un adelanto exclusivo de nuestro próximo proyecto con un sonido más íntimo y personal.",
-      coverImage: "https://images.unsplash.com/photo-1526142684086-7ebd69df27a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+      description: "Nuestro más reciente single que marca una evolución en nuestro sonido, fusionando la agresividad del metal con elementos sinfónicos.",
+      coverImage: "/assets/imagen_1743454510922.png",
       audioFiles: [
-        "https://cdn.pixabay.com/download/audio/2022/10/25/audio_946bc8fd41.mp3"
+        "https://p.scdn.co/mp3-preview/df2b5f123d4624a7f62c1765e59d1cd8435a3477"
       ],
       trackTitles: [
-        "Noche Eterna"
+        "Fury Unleashed"
       ]
     });
     
     this.createRelease({
-      title: "RAÍCES",
+      title: "HELLBOUND",
       type: "EP",
-      year: "2022",
+      year: "2023",
       tracks: 5,
       description: "Una colección de canciones que rinden homenaje a nuestros orígenes y primeras influencias.",
       coverImage: "https://images.unsplash.com/photo-1504509546545-e000b4a62425?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",

@@ -30,7 +30,7 @@ export default function Home() {
           <div className="spotify-container">
             <h3 className="text-white text-xl mb-4">Playlist Oficial</h3>
             <SpotifyPlayer 
-              playlistId="37i9dQZF1DXcBWIGoYBM5M"
+              playlistId="3ojUCBn2gpPULJ9U6FjQIB"
               className="w-full"
             />
           </div>
