@@ -8,9 +8,46 @@ import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
 import SpotifyPlayer from "@/components/SpotifyPlayer";
 import { useQuery } from '@tanstack/react-query';
+import { usePlayerStore } from "@/store/player";
 
 export default function Home() {
   const { currentTrackId } = usePlayerStore();
+  
+  const { data: releases = [], isLoading: releasesLoading } = useQuery({
+    queryKey: ['releases'],
+    queryFn: async () => {
+      const response = await fetch('/api/releases');
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    }
+  });
+
+  const { data: news = [], isLoading: newsLoading } = useQuery({
+    queryKey: ['news'],
+    queryFn: async () => {
+      const response = await fetch('/api/news');
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    }
+  });
+
+  const { data: concerts = [], isLoading: concertsLoading } = useQuery({
+    queryKey: ['concerts'],
+    queryFn: async () => {
+      const response = await fetch('/api/concerts');
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    }
+  });
+
+  const { data: gallery = [], isLoading: galleryLoading } = useQuery({
+    queryKey: ['gallery'],
+    queryFn: async () => {
+      const response = await fetch('/api/gallery');
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    }
+  });
 const { data: releases, isLoading: releasesLoading } = useQuery({
     queryKey: ['releases'],
     queryFn: async () => {
