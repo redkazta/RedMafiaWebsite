@@ -1,4 +1,3 @@
-
 import { create } from 'zustand';
 
 interface PlayerState {
@@ -9,7 +8,7 @@ interface PlayerState {
 }
 
 export const usePlayerStore = create<PlayerState>((set) => ({
-  currentTrackId: '0LgauOCJwpPugwBRZhumCj', // ALV Las Fresas como track inicial
+  currentTrackId: '3ojUCBn2gpPULJ9U6FjQIB', // Default track changed to the playlist ID
   isPlaying: false,
   setTrack: (id) => set({ currentTrackId: id }),
   setIsPlaying: (playing) => set({ isPlaying: playing })

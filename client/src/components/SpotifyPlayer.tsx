@@ -38,7 +38,7 @@ export default function SpotifyPlayer({
 
   if (!contentId) return null;
 
-  const url = `https://open.spotify.com/embed/${contentType}/${contentId}?utm_source=generator&theme=${theme}${view !== 'standard' ? '&view=' + view : ''}${autoPlay ? '&autoplay=1' : ''}`;
+  const url = `https://open.spotify.com/embed/${contentType}/${contentId}?utm_source=generator&theme=${theme}${view !== 'standard' ? '&view=' + view : ''}${autoPlay ? '&autoplay=1' : ''}&referrer=spotify`;
 
   return (
     <iframe 
