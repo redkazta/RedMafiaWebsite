@@ -107,31 +107,14 @@ export default function Navbar() {
       
       <nav className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between relative z-10">
         {/* Logo con efectos mejorados */}
-        <Link href="/" className="flex items-center mb-6 md:mb-0 group relative ml-4">
+        <Link href="/" className="flex flex-col items-center mb-6 md:mb-0 group relative">
           {/* Aureola del logo */}
           <div className="absolute -inset-4 bg-[#FF0000]/5 blur-xl rounded-full group-hover:bg-[#FF0000]/10 transition-all duration-700 opacity-0 group-hover:opacity-100"></div>
           
-          <div className="h-20 md:h-28 w-auto overflow-hidden relative">
-            <div className="absolute inset-0 bg-[#FF0000]/10 rounded-lg blur-md opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
-            <img 
-              src="/logo.jpeg" 
-              alt="Red Mafia" 
-              className="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]" 
-            />
-          </div>
-          
-          <div className="ml-16 relative hidden md:block">
-            {/* Efecto de brillo detrás del texto */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#FF0000]/5 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            
+          <div className="flex flex-col items-center gap-2">
             <h1 className="red-mafia-title text-3xl md:text-4xl tracking-wider group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_2px_rgba(255,0,0,0.5)]">RED MAFIA</h1>
-            <div className="flex items-center">
-              <p className="text-xs md:text-sm text-[#F5F5F5]/70 italic border-l-2 border-[#FF0000]/60 pl-2 mt-1">HACIENDO ALGO NUEVO WEY, ALGO BIEN</p>
-              
-              {/* Indicador de audio activo */}
-              <div className="ml-2 mt-1">
-                <Equalizer active={isAudioActive} width={30} height={12} barCount={4} />
-              </div>
+            <div className="text-center">
+              <p className="text-xs md:text-sm text-[#F5F5F5]/70 italic border-t-2 border-[#FF0000]/60 pt-2">HACIENDO ALGO NUEVO WEY, ALGO BIEN</p>
             </div>
           </div>
         </Link>
