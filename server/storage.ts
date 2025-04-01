@@ -180,6 +180,17 @@ export class MemStorage implements IStorage {
     });
     
     this.createRelease({
+      title: "ALV LAS FRESAS",
+      type: "Single",
+      year: "2024",
+      tracks: 1,
+      description: "Nuestro nuevo single que fusiona la agresividad del metal con ritmos latinos y letras provocativas.",
+      coverImage: "https://i.scdn.co/image/ab67616d0000b273d8601e7e6ede248c1bf8c662",
+      audioFiles: ["https://p.scdn.co/mp3-preview/your-preview-url-here"],
+      trackTitles: ["ALV Las Fresas"]
+    });
+
+    this.createRelease({
       title: "FURY UNLEASHED",
       type: "Single",
       year: "2024",
