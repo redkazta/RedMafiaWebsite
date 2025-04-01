@@ -108,14 +108,17 @@ export default function Home() {
       {gallery && <GallerySection gallery={gallery} />}
       <ContactSection />
       
-      {/* Floating Mini Player */}
+      {/* Spotify Mini Player */}
       <div className="fixed bottom-4 left-4 z-50">
-        <SpotifyPlayer
-          trackId="0LgauOCJwpPugwBRZhumCj"
-          width={300}
-          height={80}
-          className="rounded-lg shadow-xl"
-          mini={true}
+        <iframe 
+          src="https://open.spotify.com/embed/track/0LgauOCJwpPugwBRZhumCj?utm_source=generator&theme=0" 
+          width="300" 
+          height="80" 
+          frameBorder="0" 
+          allowFullScreen 
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+          loading="lazy"
+          className="rounded-lg shadow-xl bg-black/90"
         />
       </div>
     </div>
