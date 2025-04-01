@@ -3,7 +3,7 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { queryClient, apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'wouter';
-import { BloodCorner, FireParticles, NeonLine } from '@/components/animated';
+import { FireParticles, NeonLine } from '@/components/animated';
 
 // Página "La Familia" - Sistema de membresía exclusiva
 export default function Familia() {
@@ -68,7 +68,6 @@ export default function Familia() {
   if (!isLoadingUser && !user) {
     return (
       <div className="relative min-h-screen bg-gradient-to-b from-black to-[#1c0000] py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <BloodCorner />
         <FireParticles density={20} />
         
         <div className="max-w-4xl mx-auto">
@@ -104,7 +103,6 @@ export default function Familia() {
   if (!isLoadingMembership && membership) {
     return (
       <div className="relative min-h-screen bg-gradient-to-b from-black to-[#1c0000] py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <BloodCorner />
         <FireParticles density={30} />
         
         <div className="max-w-5xl mx-auto">
@@ -191,7 +189,6 @@ export default function Familia() {
   // Si el usuario está autenticado pero aún no tiene membresía, mostrar opciones de membresía
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-black to-[#1c0000] py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <BloodCorner />
       <FireParticles density={20} />
       
       <div className="max-w-6xl mx-auto">
