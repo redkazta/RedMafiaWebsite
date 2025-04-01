@@ -198,6 +198,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className={`relative theme-${currentTheme}`}>
+        <Navbar />
         {/* Efecto de partículas de fuego solo en el tema 'fire' */}
         {currentTheme === 'fire' && (
           <FireParticles 

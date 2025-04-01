@@ -81,7 +81,7 @@ export default function Navbar() {
 
   return (
     <header className={`
-      relative bg-black sticky top-0 left-0 right-0 z-50 transition-all duration-500
+      fixed bg-black w-full top-0 left-0 right-0 z-50 transition-all duration-500
       ${scrolled ? 'shadow-lg shadow-black/70 border-b border-[#950101]' : 'shadow-md shadow-black/30'}
     `}>
       {/* Efecto de línea superior */}
@@ -107,7 +107,7 @@ export default function Navbar() {
       
       <nav className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between relative z-10">
         {/* Logo con efectos mejorados */}
-        <Link href="/" className="flex items-center mb-6 md:mb-0 group relative">
+        <Link href="/" className="flex items-center mb-6 md:mb-0 group relative ml-4">
           {/* Aureola del logo */}
           <div className="absolute -inset-4 bg-[#FF0000]/5 blur-xl rounded-full group-hover:bg-[#FF0000]/10 transition-all duration-700 opacity-0 group-hover:opacity-100"></div>
           
