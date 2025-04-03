@@ -38,7 +38,7 @@ export default function NewsSection({ news }: NewsSectionProps) {
       <div className="container mx-auto">
         <h2 className="font-['Bebas_Neue',cursive] text-4xl md:text-5xl text-[#F5F5F5] mb-2 tracking-wider">ÚLTIMAS <span className="text-[#FF0000]">NOTICIAS</span></h2>
         <div className="h-1 w-24 bg-[#FF0000] mb-12"></div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {newsData.map((item) => (
             <article key={item.id} className="news-item bg-[#1E1E1E] rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:translate-y-[-5px]">
@@ -63,14 +63,14 @@ export default function NewsSection({ news }: NewsSectionProps) {
             </article>
           ))}
         </div>
-        
+
         {/* Sección estilo periódico */}
         <div className="mt-16 bg-[#1E1E1E] p-8 rounded-lg shadow-lg">
           <div className="text-center mb-8">
             <h3 className="font-['Bebas_Neue',cursive] text-3xl text-[#FF0000] mb-2">LA CRÓNICA ROJA</h3>
             <p className="text-[#F5F5F5]/70 italic">Las últimas noticias sobre Red Mafia y el mundo de la música</p>
           </div>
-          
+
           <div className="news-paper text-[#121212] p-6 rounded bg-[#F5F5F5] bg-[linear-gradient(rgba(200,200,200,0.1)_1px,transparent_1px)] bg-[length:100%_2em]">
             <article className="mb-6 border-b border-gray-300 pb-6">
               <h4 className="font-['Bebas_Neue',cursive] text-2xl text-[#8B0000] mb-2">RED MAFIA ROMPE RÉCORDS DE STREAMING CON NUEVO ÁLBUM</h4>
@@ -78,7 +78,7 @@ export default function NewsSection({ news }: NewsSectionProps) {
               <p className="text-gray-800 mb-3">El nuevo álbum "Sangre y Fuego" ha superado todas las expectativas, posicionándose como uno de los lanzamientos más exitosos del año en plataformas digitales, con más de 10 millones de reproducciones en su primera semana.</p>
               <p className="text-gray-800">La crítica especializada destaca la evolución sonora de la banda mientras mantiene su esencia característica, combinando elementos tradicionales con innovadoras propuestas musicales que redefinen el género.</p>
             </article>
-            
+
             <article>
               <h4 className="font-['Bebas_Neue',cursive] text-2xl text-[#8B0000] mb-2">DOCUMENTAL SOBRE LA TRAYECTORIA DE RED MAFIA SE ESTRENARÁ EN FESTIVAL DE CINE</h4>
               <p className="text-sm text-gray-600 mb-4">Por Carmen Rodríguez | 25 Abril, 2023</p>
@@ -87,7 +87,7 @@ export default function NewsSection({ news }: NewsSectionProps) {
             </article>
           </div>
         </div>
-        
+
         <div className="text-center mt-10">
           <a href="#" className="inline-flex items-center text-[#F5F5F5] hover:text-[#FF0000] transition-colors font-medium">
             VER TODAS LAS NOTICIAS
